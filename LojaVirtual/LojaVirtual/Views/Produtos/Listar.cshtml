@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model List<LojaVirtual.Models.Produto>
+@{
+    var listaDeProdutos = Model;
+}
+
+
+<h3>Lista de Produtos</h3>
+
+<form action="/produtos/listar" method="get" class="float-right pb-2">
+    <input typet="text" name="pesquisa" placeholder="Pesquisa" />
+    <input type="submit" value="Pesquisar" />
+</form>
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">nome</th>
+            <th scope="col">preço</th>
+            <th scope="col">quantidade</th>
+            <th scope="col">*</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in listaDeProdutos)
+            {
+                <tr>
+                    <th scope="row">@listaDeProdutos.IndexOf(item)</th>
+                    <td>@item.NM_NOME</td>
+                    <td>@item.NR_PRECO</td>
+                    <td>@item.NR_QUANTIDADE</td>
+                    <td><a href="/produtos/editar?Id=@item.ID">Editar</a> / <a href="/produtos/excluir?Id=@item.ID">Excluir</a></td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
+
+<i class="fas fa-camera"></i> <!-- this icon's 1) style prefix == fas and 2) icon name == camera -->
+<i class="fas fa-camera"></i> <!-- using an <i> element to reference the icon -->
+<span class="fas fa-camera"></span> <!-- using a <span> element to reference the icon -->
