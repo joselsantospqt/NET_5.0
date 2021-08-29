@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj": {}
+    "C:\\Git\\.NET-5-REST-API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj": {}
   },
   "projects": {
-    "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj": {
+    "C:\\Git\\.NET-5-REST-API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj",
+        "projectUniqueName": "C:\\Git\\.NET-5-REST-API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj",
         "projectName": "RedeSocialWeb",
-        "projectPath": "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj",
+        "projectPath": "C:\\Git\\.NET-5-REST-API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj",
         "packagesPath": "C:\\Users\\ricar\\.nuget\\packages\\",
-        "outputPath": "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\RedeSocialWeb\\obj\\",
+        "outputPath": "C:\\Git\\.NET-5-REST-API\\RedeSocial\\RedeSocialWeb\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

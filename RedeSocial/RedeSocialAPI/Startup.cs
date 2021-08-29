@@ -1,3 +1,5 @@
+using Domain.Service;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using DTO.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,11 @@ namespace RedeSocialAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RedeSocialAPI", Version = "v1" });
             });
 
-            services.AddDbContext<BancoDeDados>(config => config.UseSqlServer(Configuration.GetConnectionString("dbLocal")));
+            //dbLocal
+            services.AddScoped<PostService>();
+            services.AddScoped<PessoaService>();
+            services.AddScoped<CommentService>();
+            services.AddInfrastructure(Configuration.GetConnectionString("dbLocal"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

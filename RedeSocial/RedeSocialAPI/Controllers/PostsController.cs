@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using static System.String;
 using static System.Guid;
 using System.Linq;
-using DTO;
-using DTO.Database;
-using DTO.Service;
+using Domain.Service;
+using Domain.Entidade;
 
 namespace RedeSocialAPI.Controllers
 {
@@ -14,47 +13,28 @@ namespace RedeSocialAPI.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        //static List<Post> list = new List<Post>() {
+        private PostService _Service;
 
-        //    new Post { Id = NewGuid(), Author = "author", CreatedAt = DateTime.UtcNow, Subject = "subjct" },
-        //    new Post { Id = NewGuid(), Author = "author", CreatedAt = DateTime.UtcNow, Subject = "subjct" },
-        //    new Post { Id = NewGuid(), Author = "author", CreatedAt = DateTime.UtcNow, Subject = "subjct" }
-
-        //};
-
-
-        private BancoDeDados db;
-
-        public PostsController(BancoDeDados bancoDeDados)
+        public PostsController(PostService serivce)
         {
-            db = bancoDeDados;
+            _Service = serivce;
         }
 
         [HttpGet("getAll")]
         public ActionResult GetAll()
         {
-            var conexao = new PostService(db);
-            var todosPosts = conexao.GetAll();
+            var todosPosts = _Service.GetAll();
 
             return Ok(todosPosts);
         }
 
 
-        [HttpGet]
-        public ActionResult GetByAuthor([FromQuery] string author)
-        {
-            var conexao = new PostService(db);
-            var post = conexao.GetAuthor(author);
-
-            return Ok(post);
-        }
-
 
         [HttpGet("{id}")]
         public ActionResult GetById([FromRoute] Guid id)
         {
-            var conexao = new PostService(db);
-            var post = conexao.GetPost(id);
+
+            var post = _Service.GetPost(id);
 
             if (post == null)
                 return NoContent();
@@ -65,8 +45,8 @@ namespace RedeSocialAPI.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Post create)
         {
-            var conexao = new PostService(db);
-            var post = conexao.CreatePost(create);
+
+            var post = _Service.CreatePost(create.Author, create.CreatedAt, create.Subject);
 
             return Created("api/[controller]", post);
         }
@@ -75,8 +55,8 @@ namespace RedeSocialAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(Guid id)
         {
-            var conexao = new PostService(db);
-            conexao.DeletePost(id);
+
+            _Service.DeletePost(id);
 
             return NoContent();
         }
@@ -86,30 +66,10 @@ namespace RedeSocialAPI.Controllers
         public ActionResult Put([FromRoute] Guid id, Post update)
         {
 
-            var conexao = new PostService(db);
-            var updatePost = conexao.UpdatePost(id, update);
+            var updatePost = _Service.UpdatePost(id, update.Subject);
 
             return Ok(updatePost);
 
-        }
-
-
-        [HttpPost("{id}/comments")]
-        public ActionResult PostComment([FromRoute] Guid id, [FromBody] Comment create)
-        {
-            var conexao = new PostService(db);
-            var comment = conexao.CreateComment(id, create);
-
-            return Created("", comment);
-        }
-
-        [HttpGet("{id}/comments")]
-        public ActionResult GetComments([FromRoute] Guid id, [FromQuery] Guid commentId)
-        {
-            var conexao = new PostService(db);
-            var comments = conexao.GetComments(id, commentId);
-
-            return Ok(comments);
         }
 
     }

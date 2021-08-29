@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+NNMA7/3B4A3n573aAS6BlGhQydtsquIqQxuvJMCrSvniD43CA8K6Wz/x/3OlLLPyZilJNgzmwGZUZSfqm9dhg==",
+  "dgSpecHash": "AU6/7H9bJQkFjp7Z1wFumSe8JxGNrRoKw5Cz1QlPGFVk3KUJeKFU87rwgDPOQEJaUwnIkawex1bp8d0liax6yA==",
   "success": true,
-  "projectFilePath": "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj",
+  "projectFilePath": "C:\\Git\\.NET-5-REST-API\\RedeSocial\\RedeSocialWeb\\RedeSocialWeb.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

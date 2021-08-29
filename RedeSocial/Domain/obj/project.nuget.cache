@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9g5RrnL+4LeDHTd/um+NCXWMVi53rvMik2rrfWJJ2lwWti+l0e740wAKkI/7ZzyWN0c7IVBiTk+iff6Z+9BZVA==",
+  "dgSpecHash": "znguSh2Sh2PuZ+tX1gI4vs0j/Ln/G5UeWR9Cq3bOzbhoS1MQfCt0WA4kduFyt/Di2J8DSVlQXuvc06jKexx2OA==",
   "success": true,
-  "projectFilePath": "C:\\Git\\ASP.net\\Desenvolvimento_de_Aplicações_Web_ASP_.NET_MVC_e_Web_API\\RedeSocial\\Domain\\Domain.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Git\\.NET-5-REST-API\\RedeSocial\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ricar\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,0 +1,12 @@
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\bin\Debug\net5.0\Domain.deps.json
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\bin\Debug\net5.0\Domain.dll
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\bin\Debug\net5.0\ref\Domain.dll
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\bin\Debug\net5.0\Domain.pdb
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.AssemblyInfoInputs.cache
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.AssemblyInfo.cs
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.csproj.CoreCompileInputs.cache
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.dll
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\ref\Domain.dll
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.pdb
+C:\Git\.NET-5-REST-API\RedeSocial\Domain\obj\Debug\net5.0\Domain.csproj.AssemblyReference.cache

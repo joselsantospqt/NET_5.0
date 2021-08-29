@@ -1,0 +1,37 @@
+﻿CREATE TABLE [dbo].[PESSOA]
+([Id] UNIQUEIDENTIFIER PRIMARY KEY  NOT NULL,
+[Nome] VARCHAR(255),
+[Sobrenome] VARCHAR(255),
+[DataNascimento] DATETIME2,
+[Email] VARCHAR(50),
+[Senha] VARCHAR(50),
+[UptadeTime] DATETIME2,
+);
+
+
+
+CREATE TABLE [dbo].[POST] (
+    [ID]         INT   NOT NULL,
+    [NM_NOME]       NCHAR (255)  NOT NULL,
+    [NR_PRECO]      VARCHAR (255) NOT NULL,
+    [NR_QUANTIDADE] INT          NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+CREATE TABLE [dbo].[COMMENT] (
+    ([Id] UNIQUEIDENTIFIER PRIMARY KEY  NOT NULL,
+    [PostId] UNIQUEIDENTIFIER NOT NULL, 
+    [PessoaId] UNIQUEIDENTIFIER NOT NULL, 
+    [Text]  VARCHAR (255), 
+    [CreatedAt] DATETIME2 NOT NULL, 
+    [UpDateTime] DATETIME2)
+);
+
+CREATE TABLE [dbo].[EVENT] (
+    [ID]         INT   NOT NULL,
+    [NM_NOME]       NCHAR (255)  NOT NULL,
+    [NR_PRECO]      VARCHAR (255) NOT NULL,
+    [NR_QUANTIDADE] INT          NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
