@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entidade
 {
-    class CreatPost
+    public class CreatePost
     {
+        public string Message { get; set; }
+        public string ImagemUrl { get; set; }
     }
 }

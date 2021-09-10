@@ -13,9 +13,9 @@ namespace Domain.Service
 {
     public class PessoaService
     {
-        private IRepositorioPessoa RepositorioPessoa { get; }
+        private IPessoaRepositorio RepositorioPessoa { get; }
 
-        public PessoaService(IRepositorioPessoa repositorioPessoa)
+        public PessoaService(IPessoaRepositorio repositorioPessoa)
         {
             RepositorioPessoa = repositorioPessoa;
         }
@@ -49,15 +49,15 @@ namespace Domain.Service
         {
 
             var Pessoa = new Pessoa();
-            Pessoa.Id = NewGuid();
             Pessoa.Nome = nome;
             Pessoa.Sobrenome = sobrenome;
             Pessoa.DataNascimento = dataDeNascimento;
             Pessoa.Email = email;
             Pessoa.Senha = senha;
-            Pessoa.UpDateTime = new DateTime(); 
+            Pessoa.CreatedAt = DateTime.UtcNow;
+            Pessoa.UpdatedAt = new DateTime();
 
-            RepositorioPessoa.Save(Pessoa);
+            RepositorioPessoa.SaveUpdate(Pessoa);
 
             return Pessoa;
         }
@@ -70,15 +70,14 @@ namespace Domain.Service
         {
 
             var Pessoa = RepositorioPessoa.GetById(id);
-
             Pessoa.Nome = nome;
             Pessoa.Sobrenome = sobrenome;
             Pessoa.DataNascimento = dataDeNascimento;
             Pessoa.Email = email;
             Pessoa.Senha = senha;
-            Pessoa.UpDateTime = DateTime.UtcNow;
+            Pessoa.UpdatedAt = DateTime.UtcNow;
 
-            RepositorioPessoa.Update(Pessoa);
+            RepositorioPessoa.SaveUpdate(Pessoa);
 
             return Pessoa;
         }

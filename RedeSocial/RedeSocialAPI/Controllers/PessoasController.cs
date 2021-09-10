@@ -1,4 +1,5 @@
 ﻿using Domain.Entidade;
+using Domain.Entidade.Request;
 using Domain.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,7 +41,7 @@ namespace RedeSocialAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Pessoa([FromBody] Pessoa create)
+        public ActionResult Pessoa([FromBody] CreatePessoa create)
         {
 
             var pessoa = _Service.CreatePessoa(create.Nome, create.Sobrenome, create.DataNascimento, create.Email, create.Senha);
@@ -49,7 +50,7 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:Guid}")]
         public ActionResult Delete(Guid id)
         {
 
@@ -59,8 +60,8 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        public ActionResult Put([FromRoute] Guid id, Pessoa update)
+        [HttpPut("{id:Guid}")]
+        public ActionResult Put([FromRoute] Guid id, [FromBody] CreatePessoa update)
         {
 
             var updatePessoa = _Service.UpdatePessoa(id, update.Nome, update.Sobrenome, update.DataNascimento, update.Email, update.Senha);

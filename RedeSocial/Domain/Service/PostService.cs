@@ -12,9 +12,9 @@ namespace Domain.Service
 {
     public class PostService
     {
-        private IRepositorioPost RepositorioPost { get; }
+        private IPostRepositorio RepositorioPost { get; }
 
-        public PostService(IRepositorioPost repositorioPost)
+        public PostService(IPostRepositorio repositorioPost)
         {
             RepositorioPost = repositorioPost;
         }
@@ -40,26 +40,28 @@ namespace Domain.Service
 
         //}
 
-        public Post CreatePost(string pAuthor, DateTime pCreatedAt, string pSubject)
+        public Post CreatePost(Guid pessoaId, string message, string imagemUrl)
         {
 
             var post = new Post();
-            post.Id = NewGuid();
-            post.Author = pAuthor;
-            post.CreatedAt = pCreatedAt;
-            post.Subject = pSubject;
-            RepositorioPost.Save(post);
+            post.Message = message;
+            post.ImagemUrl = imagemUrl;
+            post.CreatedAt = DateTime.UtcNow;
+            post.UpdatedAt = new DateTime();
+            post.AddPessoa(pessoaId);
+            RepositorioPost.SaveUpdate(post);
 
             return post;
         }
 
-        public Post UpdatePost(Guid id, string pSubject)
+        public Post UpdatePost(Guid id, string message, string imagemUrl)
         {
 
             var post = RepositorioPost.GetById(id);
+            post.Message = message;
+            post.ImagemUrl = imagemUrl;
             post.UpdatedAt = DateTime.UtcNow;
-            post.Subject = pSubject;
-            RepositorioPost.Update(post);
+            RepositorioPost.SaveUpdate(post);
 
             return post;
         }

@@ -30,7 +30,7 @@ namespace RedeSocialAPI.Controllers
 
 
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:Guid}")]
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -42,17 +42,17 @@ namespace RedeSocialAPI.Controllers
             return Ok(post);
         }
 
-        [HttpPost]
-        public ActionResult Post([FromBody] Post create)
+        [HttpPost("{id:Guid}")]
+        public ActionResult Post([FromRoute] Guid id, [FromBody] CreatePost create)
         {
 
-            var post = _Service.CreatePost(create.Author, create.CreatedAt, create.Subject);
+            var post = _Service.CreatePost(id, create.Message, create.ImagemUrl);
 
             return Created("api/[controller]", post);
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:Guid}")]
         public ActionResult Delete(Guid id)
         {
 
@@ -62,11 +62,11 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        public ActionResult Put([FromRoute] Guid id, Post update)
+        [HttpPut("{id:Guid}")]
+        public ActionResult Put([FromRoute] Guid id, [FromBody] CreatePost update)
         {
 
-            var updatePost = _Service.UpdatePost(id, update.Subject);
+            var updatePost = _Service.UpdatePost(id, update.Message, update.ImagemUrl);
 
             return Ok(updatePost);
 

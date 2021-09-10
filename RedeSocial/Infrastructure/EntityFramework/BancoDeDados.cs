@@ -14,5 +14,17 @@ namespace Infrastructure.EntityFramework
         public DbSet<Post> Post { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Pessoa> Pessoa { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pessoa>()
+                .HasMany(p => p.Posts).WithOne();
+
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Comments).WithOne();
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(b => b.Post).WithOne();
+        }
     }
 }

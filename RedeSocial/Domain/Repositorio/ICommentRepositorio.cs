@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositorio
 {
-    public interface IRepositorioComment
+    public interface ICommentRepositorio
     {
-        void Save(Comment comment);
         Comment GetById(Guid id);
         void Remove(Guid id);
         IEnumerable<Comment> GetAll();
-        void Update(Comment comment);
+        void SaveUpdate(Comment comment);
+
     }
 }

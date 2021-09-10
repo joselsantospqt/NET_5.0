@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.EntityFramework.Repositorio
 {
-    class RepositorioComment : IRepositorioComment
+    class CommentRepositorio : ICommentRepositorio
     {
         private BancoDeDados _db { get; }
 
-        public RepositorioComment(BancoDeDados bancoDeDados)
+        public CommentRepositorio(BancoDeDados bancoDeDados)
         {
             _db = bancoDeDados;
         }
 
         public IEnumerable<Comment> GetAll()
         {
-            return _db.Comment.AsNoTracking().ToList();
+            return _db.Comment.Include(x => x.Post).AsNoTracking().ToList();
         }
 
         public Comment GetById(Guid id)
         {
-            return _db.Comment.Find(id);
+            return _db.Comment.Include(x => x.Post).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)
@@ -37,17 +37,15 @@ namespace Infrastructure.EntityFramework.Repositorio
                 _db.SaveChanges();
             }
         }
-
-        public void Save(Comment Comment)
+        public void SaveUpdate(Comment comment)
         {
-            _db.Comment.Add(Comment);
-            _db.SaveChanges();
-        }
+            if (comment.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
+                _db.Add(comment);
+            else
+                _db.Update(comment);
 
-        public void Update(Comment Comment)
-        {
-            _db.Comment.Update(Comment);
             _db.SaveChanges();
+
         }
     }
 }

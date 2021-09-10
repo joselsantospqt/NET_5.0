@@ -38,17 +38,17 @@ namespace RedeSocialAPI.Controllers
             return Ok(pessoa);
         }
 
-        [HttpPost]
-        public ActionResult Pessoa([FromBody] Comment create)
+        [HttpPost("{id:Guid}")]
+        public ActionResult Post([FromRoute] Guid id, [FromBody] CreateComment create)
         {
 
-            var comment = _Service.CreateComment(create.PostId, create.PessoaId, create.Text);
+            var comment = _Service.CreateComment(id, create.Text);
 
             return Created("api/[controller]", comment);
         }
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:Guid}")]
         public ActionResult Delete(Guid id)
         {
 
@@ -58,11 +58,11 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-        [HttpPut("{id}")]
-        public ActionResult Put([FromRoute] Guid id, Comment comment)
+        [HttpPut("{id:Guid}")]
+        public ActionResult Put([FromRoute] Guid id, [FromBody] CreateComment create)
         {
 
-            var updateComment = _Service.UpdateComment(id, comment.Text);
+            var updateComment = _Service.UpdateComment(id, create.Text);
 
             return Ok(updateComment);
 

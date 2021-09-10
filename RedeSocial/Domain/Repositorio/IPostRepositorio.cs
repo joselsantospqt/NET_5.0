@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositorio
 {
-    public interface IRepositorioPessoa
+    public interface IPostRepositorio
     {
-        void Save(Pessoa pessoa);
-        Pessoa GetById(Guid id);
+        Post GetById(Guid id);
         void Remove(Guid id);
-        IEnumerable<Pessoa> GetAll();
-        void Update(Pessoa pessoa);
+        IEnumerable<Post> GetAll();
+        void SaveUpdate(Post post);
 
     }
 }

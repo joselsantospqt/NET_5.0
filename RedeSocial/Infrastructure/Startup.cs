@@ -15,11 +15,11 @@ namespace Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<BancoDeDados>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<BancoDeDados>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure")));
 
-            services.AddScoped<IRepositorioPost, RepositorioPost>();
-            services.AddScoped<IRepositorioPessoa, RepositorioPessoa>();
-            services.AddScoped<IRepositorioComment, RepositorioComment>();
+            services.AddScoped<IPostRepositorio, PostRepositorio>();
+            services.AddScoped<IPessoaRepositorio, PessoaRepositorio>();
+            services.AddScoped<ICommentRepositorio, CommentRepositorio>();
         }
     }
 }

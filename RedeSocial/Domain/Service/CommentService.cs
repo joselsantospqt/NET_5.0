@@ -12,9 +12,9 @@ namespace Domain.Service
 {
     public class CommentService
     {
-        private IRepositorioComment RepositorioComment { get; }
+        private ICommentRepositorio RepositorioComment { get; }
 
-        public CommentService(IRepositorioComment repositorioComment)
+        public CommentService(ICommentRepositorio repositorioComment)
         {
             RepositorioComment = repositorioComment;
         }
@@ -28,32 +28,26 @@ namespace Domain.Service
             return RepositorioComment.GetById(id);
         }
 
-        public Comment CreateComment(Guid postId, Guid pessoaId, string text)
+        public Comment CreateComment(Guid postId, string text)
         {
+            var comment = new Comment();
+            comment.Text = text;
+            comment.AddPost(postId);
+            comment.CreatedAt =  DateTime.UtcNow;
+            RepositorioComment.SaveUpdate(comment);
 
-            var Comment = new Comment();
-            Comment.Id = NewGuid();
-            Comment.PostId = postId;
-            Comment.PessoaId = pessoaId;
-            Comment.Text = text;
-            Comment.CreatedAt =  DateTime.UtcNow;
-
-            RepositorioComment.Save(Comment);
-
-            return Comment;
+            return comment;
         }
 
         public Comment UpdateComment(Guid id, string text)
         {
 
-            var Comment = RepositorioComment.GetById(id);
+            var comment = RepositorioComment.GetById(id);
+            comment.Text = text;
+            comment.UpDateTime = DateTime.UtcNow;
+            RepositorioComment.SaveUpdate(comment);
 
-            Comment.Text = text;
-            Comment.UpDateTime = DateTime.UtcNow;
-
-            RepositorioComment.Update(Comment);
-
-            return Comment;
+            return comment;
         }
 
 
