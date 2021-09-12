@@ -1,0 +1,106 @@
+﻿<!--inicio contudo-->
+<main class="page-content">
+
+    <div class="profile-cover bg-dark">
+
+    </div>
+    <div class="col-12 col-lg-9 mx-auto">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="mb-0 my-2">Edição de trilha</h5>
+
+                <div class="card shadow-none border mt-2">
+                    <div class="card-header">
+                        <h6 class="mb-0">INFORMAÇÃO DA TRILHA</h6>
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3">
+
+
+                            <div class="col-6">
+                                <label class="form-label">Nome da trilha</label>
+                                <input type="text" class="form-control" value="Nome da Trilha">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Local</label>
+                                <input type="text" class="form-control" value="Bairro, cidade">
+                            </div>
+
+                            <div class="col-3">
+                                <label class="form-label">Data da trilha</label>
+                                <input type="text" class="form-control datepicker" placeholder="21/09/2021" />
+                            </div>
+
+                            <div class="col-3">
+                                <label class="form-label">Horário</label>
+                                <input type="text" class="form-control timepicker" placeholder="19:00" />
+                            </div>
+
+                            <div class="col-3">
+                                <label class="form-label">Duração da trilha</label>
+                                <input type="text" class="form-control" value="Ex: 2h30min">
+                            </div>
+
+                            <div class="col-3">
+                                <label class="form-label">Nível da trilha</label>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Opções</label>
+                                    <select class="form-select" id="inputGroupSelect01">
+                                        <option selected>Nível...</option>
+                                        <option value="1">Passeio</option>
+                                        <option value="2">Leve</option>
+                                        <option value="3">Moderada</option>
+                                        <option value="4">Semi-pesada</option>
+                                        <option value="5">Pesada</option>
+                                        <option value="6">Expedição</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <label for="perfilFoto" class="col-sm-12 col-form-label">Foto principal:</label>
+                                <div class="col-sm-12">
+                                    <input type="file" class="form-control" id="perfilFoto">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <label class="form-label">Ponto de encontro</label>
+                                <input type="text" class="form-control" value="Ex: 2h30min">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Informações adicionais</label>
+                                <textarea class="form-control" rows="4" cols="4" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi"></textarea>
+                            </div>
+
+                            <div class=" mt-4">
+
+                                <label class="form-label">Galeria da trilha</label>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form>
+                                            <input id="image-uploadify" type="file" accept="image/*" multiple>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div class="text-end mt-4">
+                            <button type="button" class="btn btn-primary px-4">Atualizar trilha</button>
+                            <a href="/feed/index"><button type="button" class="btn btn-outline-secondary px-4">Voltar</button></a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!--fim row-->
+
+</main>
+<!--fim main-->
