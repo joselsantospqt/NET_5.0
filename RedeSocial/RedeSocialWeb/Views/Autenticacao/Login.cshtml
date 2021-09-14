@@ -50,21 +50,20 @@
                                 <div class="card-body p-4 p-sm-5">
                                     <h5 class="card-title">Seja bem-vindo</h5>
                                     <p class="card-text mb-4">Venha trilhar novos caminhos!</p>
-                                    <form class="form-body">
-
+                                    <form class="form-body" method="post" action="Autenticacao/efetuaLogin">
                                         <div class="row g-3">
                                             <div class="col-12">
                                                 <label for="inputEmailAddress" class="form-label">Endereço de email</label>
                                                 <div class="ms-auto position-relative">
                                                     <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-envelope-fill"></i></div>
-                                                    <input class="form-control  ps-5" id="enderecoEmail" placeholder="Email">
+                                                    <input name="email" class="form-control  ps-5" id="enderecoEmail" placeholder="Email">
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <label for="inputChoosePassword" class="form-label">Digite a senha</label>
                                                 <div class="ms-auto position-relative">
                                                     <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-lock-fill"></i></div>
-                                                    <input class="form-control  ps-5" id="senhaAcesso" placeholder="Senha">
+                                                    <input name="senha" class="form-control  ps-5" id="senhaAcesso" placeholder="Senha">
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -77,12 +76,11 @@
                                                     <button type="submit" class="btn btn-primary">Entrar</button>
                                                 </div>
                                             </div>
-
-                                            <div class="col-12 text-center">
-                                                <p class="mb-0">Não tem uma conta ainda? <a href="/autenticacao/registro">Cadastra-se aqui</a></p>
-                                            </div>
                                         </div>
                                     </form>
+                                    <div class="col-12 text-center">
+                                        <p class="mb-0">Não tem uma conta ainda? <a href="/autenticacao/registro">Cadastra-se aqui</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

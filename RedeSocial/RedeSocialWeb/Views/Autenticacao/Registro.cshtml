@@ -51,41 +51,50 @@
                                         <h5 class="mb-0">Registro do usuário.</h5>
                                     </div>
                                     <hr />
-
-                                    <div class="row mb-3">
-                                        <label for="usuarioNome" class="col-sm-3 col-form-label">Informe seu nome</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="usuarioNome" placeholder="Digite seu nome">
+                                    <form method="Post" action="/Autenticacao/RegistroPessoa">
+                                        <div class="row mb-3">
+                                            <label for="usuarioNome" class="col-sm-3 col-form-label">Informe seu nome</label>
+                                            <div class="col-sm-9">
+                                                <input name="nome" type="text" class="form-control" id="usuarioNome" placeholder="Digite seu nome">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row mb-3">
-                                        <label for="usuarioEmail" class="col-sm-3 col-form-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" class="form-control" id="usuarioEmail" placeholder="Digite seu email">
+                                        <div class="row mb-3">
+                                            <label for="usuarioEmail" class="col-sm-3 col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <input name="email" type="email" class="form-control" id="usuarioEmail" placeholder="Digite seu email">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row mb-3">
-                                        <label for="usuarioSenha" class="col-sm-3 col-form-label">Escolha uma senha</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="usuarioSenha" placeholder="Digite uma senha">
+                                        <div class="row mb-3">
+                                            <label for="usuarioNascimento" class="col-sm-3 col-form-label">Data de nascimento</label>
+                                            <div class="col-sm-9">
+                                                <input name="nascimento" type="date" class="form-control input-group date" data-provide="datepicker" id="usuarioNascimento" placeholder="Entre com sua data de nascimento">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row mb-3">
-                                        <label for="usuarioSenha" class="col-sm-3 col-form-label">Confirme a senha</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="usuarioSenha" placeholder="Digite uma senha escolhida">
+                                        <div class="row mb-3">
+                                            <label for="usuarioSenha" class="col-sm-3 col-form-label">Escolha uma senha</label>
+                                            <div class="col-sm-9">
+                                                <input name="senha" type="text" class="form-control" id="usuarioSenha" placeholder="Digite uma senha">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <label class="col-sm-3 col-form-label"></label>
-                                        <div class="col-sm-9">
-                                            <button type="submit" class="btn btn-primary px-5">Cadastrar agora</button>
+                                        <div class="row mb-3">
+                                            <label for="usuarioSenha" class="col-sm-3 col-form-label">Confirme a senha</label>
+                                            <div class="col-sm-9">
+                                                <input name="senhaRepetida" type="text" class="form-control" id="usuarioSenha" placeholder="Repita a senha escolhida">
+                                            </div>
                                         </div>
-                                    </div>
+
+                                        <div class="row">
+                                            <label class="col-sm-3 col-form-label"></label>
+                                            <div class="col-sm-9">
+                                                <button type="submit" class="btn btn-primary px-5">Cadastrar agora</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
                                     <div class="col-12  pt-4 text-end">
                                         <a href="/autenticacao/login">Sair</a>
                                     </div>
