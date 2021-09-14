@@ -25,6 +25,9 @@ namespace Infrastructure.EntityFramework
 
             modelBuilder.Entity<Comment>()
                 .HasOne(b => b.Post).WithOne();
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(p => p.Pessoa).WithOne();
         }
     }
 }

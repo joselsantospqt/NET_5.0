@@ -1,4 +1,5 @@
-﻿<!--inicio content-->
+﻿@model List<Domain.Entidade.Post>;
+<!--inicio content-->
 <main class="page-content">
 
 
@@ -37,21 +38,21 @@
                         </a>
                         <!-- Comentario Texto-->
                         <div class="w-100">
-                            <form>
+                            <form method="Post" action="/Feed/EnviaDadosPost/" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="" class="form-label"></label>
-                                    <textarea class="form-control radius-10" placeholder="O que você está pensando..."></textarea>
+                                    <textarea name="textoPost" form-control radius-10 placeholder="O que você está pensando..."></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="postFoto" class="col-sm-12 col-form-label">Imagem do post:</label>
                                     <div class="col-sm-12">
-                                        <input type="file" class="form-control" id="postFoto">
+                                        <input name="filePost" type="file" class="form-control" id="postFoto">
                                     </div>
                                 </div>
+                                <div class="buttomComment d-flex justify-content-end ">
+                                    <button class="btn btn-primary" type="submit" value="Postar">Publicar post</button>
+                                </div>
                             </form>
-                            <div class="buttomComment d-flex justify-content-end ">
-                                <button class="btn btn-primary" type="submit">Publicar post</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,80 +61,90 @@
     </div>
     <!--fim row-->
     <!-- Post -->
-    <div class="row">
-        <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex mx-auto">
-            <div class="card radius-10 w-100 overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="54" height="54">
-                            <div class="ms-3">
-                                <h6 class="mb-0 dropdown-user-name">Nome do usuário</h6>
-                                <p>21/02/2021 às 16:20</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3 pt-4">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="~/assets/img/cover.jpg" class="card-img" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                        mollit anim id est laborum.
-                                    </p>
+
+    @if (Model != null)
+    {
+        foreach (var post in Model)
+        {
+            <div class="row">
+                <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex mx-auto">
+                    <div class="card radius-10 w-100 overflow-hidden">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="54" height="54">
+                                    <div class="ms-3">
+                                        <h6 class="mb-0 dropdown-user-name">@post.Autor</h6>
+                                        <p>@post.CreatedAt</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="mt-4 p-3 bg-light radius-10 border">
-                        <!-- Topo comentario -->
-                        <div class="d-flex justify-content-between">
-                            <div class="likes">1 curtida | 1 Comentário</div>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-heart"></i> Curtir</button>
-                            </div>
-                        </div>
-                        <!-- Fim comentario -->
-                        <!-- Comentario Full -->
-                        <div class="commentFull d-flex justify-content-between py-4">
-
-                            <!-- Comentario Imagem -->
-                            <a href="#">
-                                <div class="commentImage d-flex align-items-center " style="margin-right: 10px;">
-                                    <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="34" height="34">
+                            <div class="mb-3 pt-4">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="@post.ImagemUrl" class="card-img" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                @post.Message
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </a>
-                            <!-- Fim Comentario Imagem -->
-                            <!-- Comentario Texto-->
-                            <div class=" bg-white radius-10 p-2">
-                                <p class="commentName px-3 mb-0"><strong>Nome da pessoa</strong></p>
-                                <p class="commentText px-3 pt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris </p>
                             </div>
-                            <!-- Fim Comentario Texto-->
+                            <div class="mt-4 p-3 bg-light radius-10 border">
+                                <!-- Topo comentario -->
+                                @foreach (var comentario in post.Comments)
+                                {
+                                    //Sem dados do comentário para a pessoa ou terei que buscar pelo id do comentario
+                                    <div class="d-flex justify-content-between">
+                                        <div class="likes">1 curtida | 1 Comentário</div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-heart"></i> Curtir</button>
+                                        </div>
+                                    </div>
+                                    <!-- Fim comentario -->
+                                    <!-- Comentario Full -->
+                                    <div class="commentFull d-flex justify-content-between py-4">
 
-                        </div>
-                        <!-- Fim comentario -->
-                        <!-- Comentario textarea-->
-                        <div>
-                            <div class="mb-3">
-                                <label for="" class="form-label"></label>
-                                <textarea class="form-control radius-10" placeholder="Escreva o seu comentário..."></textarea>
+                                        <!-- Comentario Imagem -->
+                                        <a href="#">
+                                            <div class="commentImage d-flex align-items-center " style="margin-right: 10px;">
+                                                <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="34" height="34">
+                                            </div>
+                                        </a>
+                                        <!-- Fim Comentario Imagem -->
+                                        <!-- Comentario Texto-->
+                                        <div class=" bg-white radius-10 p-2">
+                                            <p class="commentName px-3 mb-0"><strong>Nome da pessoa</strong></p>
+                                            <p class="commentText px-3 pt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris </p>
+                                        </div>
+                                        <!-- Fim Comentario Texto-->
+
+                                    </div>
+                                }
+                                <!-- Fim comentario -->
+                                <!-- Comentario textarea-->
+                                <div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label"></label>
+                                        <textarea class="form-control radius-10" placeholder="Escreva o seu comentário..."></textarea>
+                                    </div>
+                                    <div class="buttomComment d-flex justify-content-end ">
+                                        <button class="btn btn-primary btn-sm" type="submit">Enviar Comentário.</button>
+                                    </div>
+                                </div>
+                                <!-- fim comentario textarea-->
                             </div>
-                            <div class="buttomComment d-flex justify-content-end ">
-                                <button class="btn btn-primary btn-sm" type="submit">Enviar Comentário.</button>
-                            </div>
                         </div>
-                        <!-- fim comentario textarea-->
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </div>
+            </div>
+        }
+    }
+
     <!--fim row-->
     <!-- Post -->
     <div class="row">

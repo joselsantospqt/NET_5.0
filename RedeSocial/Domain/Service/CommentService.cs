@@ -28,11 +28,12 @@ namespace Domain.Service
             return RepositorioComment.GetById(id);
         }
 
-        public Comment CreateComment(Guid postId, string text)
+        public Comment CreateComment(Guid postId, string text, Guid pessoaId)
         {
             var comment = new Comment();
             comment.Text = text;
             comment.AddPost(postId);
+            comment.AddPessoa(pessoaId);
             comment.CreatedAt =  DateTime.UtcNow;
             RepositorioComment.SaveUpdate(comment);
 
