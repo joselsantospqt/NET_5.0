@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -17,19 +18,27 @@ namespace RedeSocialWeb.Controllers
             return View();
         }
 
-        public async Task<ActionResult> efetuaLogin(string email, string senha)
+        public ActionResult Create()
         {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> efetuaLogin(IFormCollection collection)
+        {
+            var login = collection["Email"];
+            var senha = collection["Senha"];
+
             //Subistituir aqui para autenticação
             var pessoaLogin = new CreatePessoa();
 
-            HttpClient httpClient = new HttpClient();
+            //HttpClient httpClient = new HttpClient();
 
             //aqui get id pessoa com email e senha passados para o token ficar salvo com o ID
 
-            var jsonLoginPessoa = JsonConvert.SerializeObject(pessoaLogin);
-            var conteudo = new StringContent(jsonLoginPessoa, System.Text.Encoding.UTF8, "application/json");
+            //var jsonLoginPessoa = JsonConvert.SerializeObject(pessoaLogin);
+            //var conteudo = new StringContent(jsonLoginPessoa, System.Text.Encoding.UTF8, "application/json");
 
-            await httpClient.PostAsync("https://localhost:44383/api/Pessoas/login", conteudo);
+            //await httpClient.PostAsync("https://localhost:44383/api/Pessoas/login", conteudo);
 
             return RedirectToAction("Index", "Feed");
         }
@@ -43,32 +52,37 @@ namespace RedeSocialWeb.Controllers
         {
             return View();
         }
-
-        public async Task<ActionResult> RegistroPessoa(string nome, string email, DateTime dataNascimento,string senha, string senhaRepetida)
+        [HttpPost]
+        public async Task<IActionResult> Registro(IFormCollection collection)
         {
-            if (senha != senhaRepetida)
-            {
-                return RedirectToAction("Registro");
-            }else if (senha == null)
-            {
-                return RedirectToAction("Registro");
-            }
+            ViewData["validar"] = "Validado com sucesso";
 
-            if (nome == null)
+            if (collection["Senha"].ToString().Length < 1)
             {
-                return RedirectToAction("Registro");
-            }
+                ViewData["validar"] = "Senha não pode ser vazia";
+                return View();
 
-            if (email == null)
+            }else if (collection["Nome"].ToString().Length < 1)
             {
-                return RedirectToAction("Registro");
+                ViewData["validar"] = "Nome não pode ser vazio";
+                return View();
+
+            }else if (collection["Email"].ToString().Length < 1)
+            {
+                ViewData["validar"] = "Email não pode ser vazio";
+                return View();
+
+            }else if (collection["DataNascimento"].ToString() == "dd/mm/aaaa")
+            {
+                ViewData["validar"] = "Data de nascimento não pode ser vazio";
+                return View();
             }
 
             var createPessoa = new CreatePessoa();
-            createPessoa.Nome = nome;
-            createPessoa.Email = email;
-            createPessoa.DataNascimento = dataNascimento;
-            createPessoa.Senha = senha;
+            createPessoa.Nome = collection["Nome"];
+            createPessoa.Email = collection["Email"];
+            createPessoa.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
+            createPessoa.Senha = collection["Senha"];
 
 
             HttpClient httpClient = new HttpClient();
