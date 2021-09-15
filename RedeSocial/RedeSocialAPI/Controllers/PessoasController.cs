@@ -40,6 +40,7 @@ namespace RedeSocialAPI.Controllers
             return Ok(pessoa);
         }
 
+
         [HttpPost]
         public ActionResult Pessoa([FromBody] CreatePessoa create)
         {
@@ -64,12 +65,11 @@ namespace RedeSocialAPI.Controllers
         public ActionResult Put([FromRoute] Guid id, [FromBody] CreatePessoa update)
         {
 
-            var updatePessoa = _Service.UpdatePessoa(id, update.Nome, update.Sobrenome, update.DataNascimento, update.Email, update.Senha);
+            var updatePessoa = _Service.UpdatePessoa(id, update.Nome, update.Sobrenome, update.DataNascimento, update.Email, update.Senha, update.UrlImagem);
 
             return Ok(updatePessoa);
 
         }
-
 
     }
 }

@@ -17,6 +17,7 @@ namespace Domain.Entidade
         public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
+        public string ImagemUrlPessoa { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public IList<PessoaPost> Posts { get; set; }

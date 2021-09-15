@@ -38,11 +38,11 @@ namespace RedeSocialAPI.Controllers
             return Ok(pessoa);
         }
 
-        [HttpPost("{id:Guid}")]
-        public ActionResult Post([FromRoute] Guid id, [FromBody] CreateComment create)
+        [HttpPost("{id:Guid}/{pessoaId:Guid}")]
+        public ActionResult Post([FromRoute] Guid id, [FromRoute] Guid pessoaId, [FromBody] CreateComment create)
         {
 
-            var comment = _Service.CreateComment(id, create.Text);
+            var comment = _Service.CreateComment(id, create.Text, pessoaId);
 
             return Created("api/[controller]", comment);
         }

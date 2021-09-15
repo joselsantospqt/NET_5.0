@@ -45,7 +45,7 @@ namespace Domain.Service
 
             var post = new Post();
             post.Message = message;
-            post.ImagemUrl = imagemUrl;
+            post.ImagemUrlPost = imagemUrl;
             post.CreatedAt = DateTime.UtcNow;
             post.UpdatedAt = new DateTime();
             post.AddPessoa(pessoaId);
@@ -59,7 +59,7 @@ namespace Domain.Service
 
             var post = RepositorioPost.GetById(id);
             post.Message = message;
-            post.ImagemUrl = imagemUrl;
+            post.ImagemUrlPost = imagemUrl;
             post.UpdatedAt = DateTime.UtcNow;
             RepositorioPost.SaveUpdate(post);
 

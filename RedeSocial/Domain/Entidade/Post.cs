@@ -13,7 +13,7 @@ namespace Domain.Entidade
         [Key]
         public Guid Id { get; set; }
         public string Message { get; set; }
-        public string ImagemUrl { get; set; }
+        public string ImagemUrlPost { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public PessoaPost Autor { get; set; }
