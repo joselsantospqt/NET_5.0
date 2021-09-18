@@ -40,7 +40,16 @@ namespace RedeSocialWeb.Controllers
 
             //await httpClient.PostAsync("https://localhost:44383/api/Pessoas/login", conteudo);
 
-            return RedirectToAction("Index", "Feed");
+
+            //TESTE IMPROVISAO 
+
+            HttpClient httpClient = new HttpClient();
+           
+            var resultado = await httpClient.GetAsync("https://localhost:44383/api/Pessoas/14441ce7-15bd-4f9b-9900-08d9781c04c6");
+            var conteudo = await resultado.Content.ReadAsStringAsync();
+            Pessoa Pessoa = JsonConvert.DeserializeObject<Pessoa>(conteudo);
+
+            return RedirectToAction("Index", "Feed", Pessoa);
         }
 
         public IActionResult RecuperarSenha()
