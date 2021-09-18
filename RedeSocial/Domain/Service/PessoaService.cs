@@ -20,13 +20,14 @@ namespace Domain.Service
             RepositorioPessoa = repositorioPessoa;
         }
 
-        public IEnumerable<Pessoa> GetAll()
-        {
-            return RepositorioPessoa.GetAll();
-        }
         public Pessoa GetPessoa(Guid id)
         {
             return RepositorioPessoa.GetById(id);
+        }
+
+        public IEnumerable<Pessoa> GetAll()
+        {
+            return RepositorioPessoa.GetAll();
         }
 
         //IMPLEMENTAR MAIS PARA FRENTE
@@ -66,7 +67,7 @@ namespace Domain.Service
             string nome,
             string sobrenome,
             DateTime dataDeNascimento,
-            string email, string senha)
+            string email, string senha, string urlImagem)
         {
 
             var Pessoa = RepositorioPessoa.GetById(id);
@@ -75,9 +76,13 @@ namespace Domain.Service
             Pessoa.DataNascimento = dataDeNascimento;
             Pessoa.Email = email;
             Pessoa.Senha = senha;
+            Pessoa.ImagemUrlPessoa = urlImagem;
             Pessoa.UpdatedAt = DateTime.UtcNow;
 
             RepositorioPessoa.SaveUpdate(Pessoa);
+
+            //CRIAR UM RETORNO PARA SAVEUPDATE PARA VERIFICAR SE FOI PERSISTIDO A IMAGEM
+            //DEPOIS INCLUIR O REPOSITORIO DA UPLOAD DE IMAGEM AQUI
 
             return Pessoa;
         }

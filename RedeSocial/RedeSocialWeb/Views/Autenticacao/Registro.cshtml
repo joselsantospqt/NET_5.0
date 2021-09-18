@@ -1,124 +1,98 @@
-﻿@{
-    Layout = "";
+﻿@model Domain.Entidade.Request.CreatePessoa;
+@{
+    Layout = "~/Views/Shared/_LayoutDeslogado.cshtml";
+    var validar = ViewBag.validar;
 }
-<!doctype html>
-<html lang="pt-br" class="light-theme">
+@section Scripts
+    {
+    <script src="~/assets/plugins/datetimepicker/js/picker.js" asp-fallback-src="~/assets/plugins/datetimepicker/js/picker.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/datetimepicker/js/picker.time.js" asp-fallback-src="~/assets/plugins/datetimepicker/js/picker.time.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/datetimepicker/js/picker.date.js" asp-fallback-src="~/assets/plugins/datetimepicker/js/picker.date.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js" asp-fallback-src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js" asp-fallback-src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js" asp-fallback-src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js" asp-fallback-src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js" asp-fallback-src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/js/form-file-upload.js" asp-fallback-src="~/assets/js/form-file-upload.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+    <script src="~/assets/js/form-date-time-pickes.js" asp-fallback-src="~/assets/js/form-date-time-pickes.js" asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"></script>
+}
+<!--inicio content-->
+<main class="mt-md-5">
+    <div class="container">
+        <div class="mt-4">
+            <!--inicio row-->
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="border p-4 rounded">
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="assets/img/favicon-32x32.png" type="image/png" />
-
-    <!--CSS -->
-    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
-    <link href="~/assets/css/style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
-    <title>Tracking Trip</title>
-</head>
-
-<body class="bg-surface">
-
-    <!--inicio wrapper-->
-    <div class="wrapper">
-
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-white rounded-0 border-bottom">
-                <div class="container">
-                    <div class="col-12 p-0 flex-column d-flex align-items-center justify-content-center my-3">
-                        <!-- logo -->
-                        <a class="navbar-brand" href="#"><img src="~/assets/img/brand-logo-2.png" width="400" alt="" /></a>
-                        <!-- fim da logo -->
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <!--inicio content-->
-        <main class="mt-md-5">
-            <div class="container">
-                <div class="mt-4">
-                    <!--inicio row-->
-                    <div class="row">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="border p-4 rounded">
-
-                                    <div class="card-title d-flex align-items-center">
-                                        <h5 class="mb-0">Registro do usuário.</h5>
-                                    </div>
-                                    <hr />
-                                    <form method="Post" action="/Autenticacao/RegistroPessoa">
-                                        <div class="row mb-3">
-                                            <label for="usuarioNome" class="col-sm-3 col-form-label">Informe seu nome</label>
-                                            <div class="col-sm-9">
-                                                <input name="nome" type="text" class="form-control" id="usuarioNome" placeholder="Digite seu nome">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="usuarioEmail" class="col-sm-3 col-form-label">Email</label>
-                                            <div class="col-sm-9">
-                                                <input name="email" type="email" class="form-control" id="usuarioEmail" placeholder="Digite seu email">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="usuarioNascimento" class="col-sm-3 col-form-label">Data de nascimento</label>
-                                            <div class="col-sm-9">
-                                                <input name="nascimento" type="date" class="form-control input-group date" data-provide="datepicker" id="usuarioNascimento" placeholder="Entre com sua data de nascimento">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="usuarioSenha" class="col-sm-3 col-form-label">Escolha uma senha</label>
-                                            <div class="col-sm-9">
-                                                <input name="senha" type="text" class="form-control" id="usuarioSenha" placeholder="Digite uma senha">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="usuarioSenha" class="col-sm-3 col-form-label">Confirme a senha</label>
-                                            <div class="col-sm-9">
-                                                <input name="senhaRepetida" type="text" class="form-control" id="usuarioSenha" placeholder="Repita a senha escolhida">
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <label class="col-sm-3 col-form-label"></label>
-                                            <div class="col-sm-9">
-                                                <button type="submit" class="btn btn-primary px-5">Cadastrar agora</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    
-                                    <div class="col-12  pt-4 text-end">
-                                        <a href="/autenticacao/login">Sair</a>
+                            <div class="card-title d-flex align-items-center">
+                                <h5 class="mb-0">Registro do usuário.</h5>
+                            </div>
+                            <hr />
+                            <form asp-action="Registro" method="post">
+                                <div class="row mb-3">
+                                    <label asp-for="Nome" class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Nome" name="Nome" class="form-control" placeholder="Digite seu nome">
                                     </div>
                                 </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="Email" class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Email" name="Email" type="email" class="form-control" placeholder="Digite seu email">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="DataNascimento" class="col-sm-3 col-form-label">Data de nascimento</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="DataNascimento" name="DataNascimento" type="date" class="form-control input-group date" data-provide="datepicker" id="usuarioNascimento" placeholder="Entre com sua data de nascimento">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label asp-for="Senha" class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="Senha" name="Senha" type="text" class="form-control" id="usuarioSenha" placeholder="Digite uma senha">
+                                    </div>
+                                </div>
+
+                                @*<div class="row mb-3 d-none">
+                                        <label for="usuarioSenha" class="col-sm-3 col-form-label">Confirme a senha</label>
+                                        <div class="col-sm-9">
+                                            <input name="senhaRepetida" type="text" class="form-control" id="usuarioSenha" placeholder="Repita a senha escolhida">
+                                        </div>
+                                    </div>*@
+
+                                <div class="row">
+                                    <label class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-9">
+                                        <input type="submit" class="btn btn-primary px-5" value="Cadastrar">
+                                    </div>
+                                </div>
+                                @{
+                                    if (validar != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <p class="text-danger">@validar</p>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </form>
+
+                            <div class="col-12  pt-4 text-end">
+                                <a asp-action="Login">Voltar</a>
                             </div>
                         </div>
                     </div>
-                    <!--fim row-->
                 </div>
             </div>
-        </main>
-        <!--fim  main-->
-
-        <footer class="bg-white border-top p-3 text-center fixed-bottom">
-            <p class="mb-0">2021 © Tracking Trip - Todos os Direitos Reservados</p>
-        </footer>
-
+            <!--fim row-->
+        </div>
     </div>
-    <!--fim wrapper-->
-
-    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/js/jquery.min.js"></script>
-
-
-</body>
-
-</html>
+</main>
+<!--fim  main-->

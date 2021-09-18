@@ -20,12 +20,12 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Comment> GetAll()
         {
-            return _db.Comment.Include(x => x.Post).AsNoTracking().ToList();
+            return _db.Comment.Include(x => x.Post).Include(x => x.Pessoa).AsNoTracking().ToList();
         }
 
         public Comment GetById(Guid id)
         {
-            return _db.Comment.Include(x => x.Post).Where(x => x.Id == id).FirstOrDefault();
+            return _db.Comment.Include(x => x.Post).Include(x => x.Pessoa).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)

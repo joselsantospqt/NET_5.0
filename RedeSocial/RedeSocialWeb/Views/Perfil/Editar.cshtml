@@ -1,0 +1,132 @@
+﻿@model Domain.Entidade.Pessoa;
+<!--inicio content-->
+<main class="page-content">
+
+    <div class="profile-cover bg-dark"></div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-0">Seu perfil</h5>
+                    <hr>
+                    <div class="card shadow-none border">
+                        <div class="card-header">
+                            <h6 class="mb-0">INFORMAÇÃO DO USUÁRIO</h6>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="Editar" method="post" enctype="multipart/form-data" class="row g-3" >
+                                <div class="col-6">
+                                    <label asp-for="Nome" class="form-label">Apelido</label>
+                                    <input type="text" asp-for="Nome" name="Nome" class="form-control" value="NomeDoUsuário">
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="Email" class="form-label">Email</label>
+                                    <input type="text" asp-for="Email" name="Email" class="form-control" value="xpto@hotmail.com.br">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Nome</label>
+                                    <input type="text" asp-for="Nome" name="Nome" class="form-control" value="Nome do usuário">
+                                </div>
+
+                                <div class="col-12">
+                                    <label asp-for="ImagemUrlPessoa" class="col-sm-12 col-form-label">Foto do perfil:</label>
+                                    <div class="col-sm-12">
+                                        <input type="file" asp-for="ImagemUrlPessoa" name="ImagemUrlPessoa" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="text-start">
+                                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    @*<div class="card shadow-none border">
+                            <div class="card-header">
+                                <h6 class="mb-0">OUTRAS INFORMAÇÔES</h6>
+                            </div>
+                            <div class="card-body">
+                                <form class="row g-3">
+                                    <div class="col-6">
+                                        <label class="form-label">Bairro</label>
+                                        <input type="text" class="form-control" value="Barra da Aldeia">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Cidade</label>
+                                        <input type="text" class="form-control" value="Cassemiro de Abreu">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label">Sua idade</label>
+                                        <input type="text" class="form-control" value="27 anos">
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="form-label">Estado</label>
+                                        <input type="text" class="form-control" value="RJ">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Pais</label>
+                                        <input type="text" class="form-control" value="Brasil">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Sobre você</label>
+                                        <textarea class="form-control" rows="4" cols="4" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="text-start">
+                            <button type="button" class="btn btn-primary px-4">Salvar alterações</button>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        @*<div class="col-12 col-lg-4">
+                <div class="card shadow-sm border-0 overflow-hidden">
+                    <div class="card-body">
+                        <div class="profile-avatar text-center">
+                            <img src="https://via.placeholder.com/110X110" class="rounded-circle shadow" width="120" height="120" alt="">
+                        </div>
+                        <div class="d-flex align-items-center justify-content-around mt-5 gap-3">
+                            <div class="text-center">
+                                <h4 class="mb-0">150</h4>
+                                <p class="mb-0 text-secondary">Amigos</p>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="mb-0">25</h4>
+                                <p class="mb-0 text-secondary">Fotos</p>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="mb-0">13</h4>
+                                <p class="mb-0 text-secondary">Trilhas publicadas</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <h4 class="mb-1">Nome do usuário, 27 anos</h4>
+                            <p class="mb-0 text-secondary">Cassemiro de Abreu, Rio de Janeiro</p>
+                            <div class="mt-4"></div>
+                        </div>
+                        <hr>
+                        <div class="text-start">
+                            <h5 class="">Sobre</h5>
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-top">
+                            Trilhas confirmadas
+                            <span class="badge bg-primary rounded-pill">45</span>
+                        </li>
+                        <li>
+                            <div class="col py-4 text-center">
+                                <a href="/perfil/excluirconta"><button type="button" class="btn btn-sm btn-danger px-5">Excluir conta</button></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
+    </div>
+    <!--fim row-->
+
+</main>
+<!--fim main-->

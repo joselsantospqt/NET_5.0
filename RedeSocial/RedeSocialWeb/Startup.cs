@@ -50,7 +50,7 @@ namespace RedeSocialWeb
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Autenticacao}/{action=Login}");
             });
         }
     }
