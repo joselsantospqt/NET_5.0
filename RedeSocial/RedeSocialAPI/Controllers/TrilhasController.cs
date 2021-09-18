@@ -1,4 +1,5 @@
-﻿using Domain.Service;
+﻿using Domain.Entidade.Request;
+using Domain.Service;
 using Infrastructure.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,13 +44,21 @@ namespace RedeSocialAPI.Controllers
             return Ok(trilha);
         }
 
-        [HttpPost("")]
+        [HttpPost("{id:Guid}")]
         public ActionResult Post(
+            [FromRoute] Guid id,
             [FromServices] BancoDeDados bancoDeDados,
-            [FromBody] Domain.Entidade.Trilha trilha)
+            [FromBody] CreateTrilha createTrilha)
         {
 
-            var trilhaRegister = _Service.CreateTrilha(trilha);
+            var trilhaRegister = _Service.CreateTrilha(id,
+                createTrilha.NomeTrilha,
+                createTrilha.ImagemTrilha, 
+                createTrilha.DuracaoTrilha, 
+                createTrilha.DataTrilha, 
+                createTrilha.Local, 
+                createTrilha.Nivel, 
+                createTrilha.Descricao);
 
             return Created("api/[controller]", trilhaRegister);
         }

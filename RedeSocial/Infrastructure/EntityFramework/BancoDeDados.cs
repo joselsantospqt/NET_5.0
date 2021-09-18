@@ -14,6 +14,7 @@ namespace Infrastructure.EntityFramework
         public DbSet<Post> Post { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Pessoa> Pessoa { get; set; }
+        public DbSet<Trilha> Trilha { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

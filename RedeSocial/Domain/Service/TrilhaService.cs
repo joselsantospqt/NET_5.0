@@ -14,7 +14,7 @@ namespace Domain.Service
             RespositorioTrilha = trilhaRespositorio;
         }
 
-        public IEnumerable<Trilha> GetAll()
+        public List<Trilha> GetAll()
         {
             return RespositorioTrilha.GetAll();
         }
@@ -23,22 +23,29 @@ namespace Domain.Service
             return RespositorioTrilha.GetById(id);
         }
 
-        public Trilha CreateTrilha(Trilha trilha)
+        public Trilha CreateTrilha(Guid pessoaId, 
+            string nomeTrilha, 
+            string imagemTrilha, 
+            string duracaoTrilha,
+            DateTime dataTrilha,
+            string local, 
+            string nivel, 
+            string descricao)
         {
-            var resul = new Trilha
-            {
-                Id = new Guid(),
-                NomeTrilha = trilha.NomeTrilha,
-                ImagemTrilha = trilha.ImagemTrilha,
-                DuracaoTrilha = trilha.DuracaoTrilha,
-                DataTrilha = trilha.DataTrilha,
-                Local = trilha.Local,
-                Nivel = trilha.Nivel,
-                Descricao = trilha.Descricao
 
-            };
+            var resul = new Trilha();
 
-            RespositorioTrilha.SaveUpdate(trilha);
+            resul.Id = new Guid();
+            resul.NomeTrilha = nomeTrilha;
+            resul.ImagemTrilha = imagemTrilha;
+            resul.DuracaoTrilha = duracaoTrilha;
+            resul.DataTrilha = dataTrilha;
+            resul.Local = local;
+            resul.Nivel = nivel;
+            resul.Descricao = descricao;
+            resul.AddPessoaTrilha(pessoaId);
+
+            RespositorioTrilha.SaveUpdate(resul);
 
             return resul;
 

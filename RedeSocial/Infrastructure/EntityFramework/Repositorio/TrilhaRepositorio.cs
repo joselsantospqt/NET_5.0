@@ -22,13 +22,13 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public List<Trilha> GetAll()
         {
-            return _db.Trilha.Include(x => x.AutorTrilha).AsNoTracking().ToList();
+            return _db.Trilha.AsNoTracking().ToList();
         }
 
 
         public Trilha GetById(Guid id)
         {
-            return _db.Trilha.Include(x => x.AutorTrilha).Where(x => x.Id == id).FirstOrDefault();
+            return _db.Trilha.Where(x => x.Id == id).FirstOrDefault();
         }
 
        
