@@ -1,4 +1,11 @@
-﻿<!doctype html>
+﻿@{
+
+    var pessoaId = ViewBag.ID;
+    var pessoaNome = ViewBag.Nome;
+    var pessoaImagem = ViewBag.url;
+
+ }
+<!doctype html>
 <html lang="pt-br" class="light-theme">
 
 <head>
@@ -56,16 +63,16 @@
                         <li class="nav-item dropdown dropdown-user-setting">
                             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
                                 <div class="user-setting d-flex align-items-center">
-                                    <img src="https://via.placeholder.com/110X110" class="user-img" alt="">
+                                    <img src="@pessoaImagem" class="user-img" alt="">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="/perfil/perfilusuario">
                                         <div class="d-flex align-items-center">
-                                            <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="54" height="54">
+                                            <img src="@pessoaImagem" alt="" class="rounded-circle" width="54" height="54">
                                             <div class="ms-3">
-                                                <h6 class="mb-0 dropdown-user-name">Nome do usuário</h6>
+                                                <h6 class="mb-0 dropdown-user-name">@pessoaNome</h6>
                                             </div>
                                         </div>
                                     </a>
@@ -74,7 +81,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/perfil/perfilusuario">
+                                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Detalhes/@pessoaId">
                                         <div class="d-flex align-items-center">
                                             <div class=""><i class="bi bi-person-fill"></i></div>
                                             <div class="ms-3"><span>Ver o perfil</span></div>
@@ -82,7 +89,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/perfil/editarperfil">
+                                     @*@Html.ActionLink("Editar", "Editar", "Perfil", new { id = @pessoaId })*@
+                                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Editar" asp-route-id="@pessoaId">
                                         <div class="d-flex align-items-center">
                                             <div class=""><i class="bi bi-gear-fill"></i></div>
                                             <div class="ms-3"><span>Editar perfil</span></div>
@@ -90,18 +98,10 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/perfil/excluirconta">
-                                        <div class="d-flex align-items-center">
-                                            <div class=""><i class="bi bi-person-x-fill"></i></div>
-                                            <div class="ms-3"><span>Excluir conta</span></div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/autenticacao/login">
+                                    <a class="dropdown-item" asp-controller="Aunteticacao" asp-action="Index">
                                         <div class="d-flex align-items-center">
                                             <div class=""><i class="bi bi-lock-fill"></i></div>
                                             <div class="ms-3"><span>Sair</span></div>
