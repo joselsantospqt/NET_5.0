@@ -10,7 +10,6 @@ namespace Domain.Repositorio
     public interface IPessoaRepositorio
     {
         Pessoa GetById(Guid id);
-        Pessoa GetByEmail(string Email);
         void Remove(Guid id);
         IEnumerable<Pessoa> GetAll();
         void SaveUpdate(Pessoa pessoa);

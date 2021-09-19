@@ -41,17 +41,17 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-        [HttpGet("{email}")]
-        public ActionResult GetByEmail([FromRoute] string email)
-        {
+        //[HttpGet("{email}")]
+        //public ActionResult GetByEmail([FromRoute] string email)
+        //{
 
-            var pessoa = _Service.GetPesoaEmail(email);
+        //    var pessoa = _Service.GetPesoaEmail(email);
 
-            if (pessoa == null)
-                return NoContent();
+        //    if (pessoa == null)
+        //        return NoContent();
 
-            return Ok(pessoa);
-        }
+        //    return Ok(pessoa);
+        //}
 
 
 
