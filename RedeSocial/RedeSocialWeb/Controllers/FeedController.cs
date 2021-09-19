@@ -57,7 +57,7 @@ namespace RedeSocialWeb.Controllers
 
             var query = from posts in ListaPost
                         join comments in ListaComments on posts.Id equals comments.Post.PostId
-                        select new { idPost = posts.Id, postMensagem = posts.Message, IdComment = comments.Id, commentsMessage = comments.Text };
+                        select new { idPost = posts.Id, postMensagem = posts.Message, IdComment = comments.Id, commentsMessage = comments.Text , IdPessoaComment = comments.Pessoa.Id};
 
 
             foreach (var item in query)
