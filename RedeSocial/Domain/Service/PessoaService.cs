@@ -99,6 +99,14 @@ namespace Domain.Service
             RepositorioPessoa.Remove(id);
         }
 
+        public Pessoa CadastraAmigo(Guid idPessoa, Guid idAmigo)
+        {
+            var pessoa = GetPessoa(idPessoa);
+            pessoa.AddAmigo(idAmigo);
 
+            RepositorioPessoa.SaveUpdate(pessoa);
+
+            return pessoa;
+        }
     }
 }

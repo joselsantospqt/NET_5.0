@@ -20,6 +20,9 @@ namespace Infrastructure.EntityFramework
             modelBuilder.Entity<Pessoa>()
                 .HasMany(p => p.Posts).WithOne();
 
+            modelBuilder.Entity<Pessoa>()
+                .HasMany(p => p.Amigos).WithOne();
+
             modelBuilder.Entity<Post>()
                 .HasMany(p => p.Comments).WithOne();
 
