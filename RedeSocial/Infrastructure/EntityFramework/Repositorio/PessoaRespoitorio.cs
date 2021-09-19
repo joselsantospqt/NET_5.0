@@ -21,12 +21,12 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Pessoa> GetAll()
         {
-            return _db.Pessoa.Include(x => x.Posts).AsNoTracking().ToList();
+            return _db.Pessoa.Include(x => x.Posts).Include(x => x.Amigos).ToList();
         }
 
         public Pessoa GetById(Guid id)
         {
-            return _db.Pessoa.Include(x => x.Posts).Where(x => x.Id == id).FirstOrDefault();
+            return _db.Pessoa.Include(x => x.Posts).Include(x => x.Amigos).Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Remove(Guid id)
@@ -48,6 +48,6 @@ namespace Infrastructure.EntityFramework.Repositorio
 
             _db.SaveChanges();
 
-        }
+        }        
     }
 }

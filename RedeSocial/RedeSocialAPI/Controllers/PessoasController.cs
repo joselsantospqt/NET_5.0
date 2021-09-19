@@ -71,5 +71,11 @@ namespace RedeSocialAPI.Controllers
 
         }
 
+        [HttpPost("{idPessoa:Guid}/{idAmigo:Guid}")]
+        public ActionResult CadastraAmigo([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
+        {
+            var pessoa = _Service.CadastraAmigo(idPessoa, idAmigo);
+            return Ok(pessoa);
+        }
     }
 }
