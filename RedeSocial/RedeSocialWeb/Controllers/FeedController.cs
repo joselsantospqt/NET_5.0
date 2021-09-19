@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RedeSocialWeb.Controllers
 {
+    [Authorize]
     public class FeedController : Controller
     {
-        public ActionResult View()
+        public ActionResult feed()
         {
             return View();
         }

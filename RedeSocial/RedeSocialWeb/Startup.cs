@@ -26,14 +26,10 @@ namespace RedeSocialWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
+            //services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("connectionString")));
             
             services.AddControllersWithViews();
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,15 +52,15 @@ namespace RedeSocialWeb
 
             app.UseAuthorization();
 
-            app.UseAuthentication();
-
-           
+            app.UseAuthentication();           
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Autenticacao}/{action=Login}");
+                    pattern: "{controller=Feed}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
 
           

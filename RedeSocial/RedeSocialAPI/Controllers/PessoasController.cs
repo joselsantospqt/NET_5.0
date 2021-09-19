@@ -45,7 +45,7 @@ namespace RedeSocialAPI.Controllers
         public ActionResult Pessoa([FromBody] CreatePessoa create)
         {
 
-            var pessoa = _Service.CreatePessoa(create.Nome, create.Sobrenome, create.DataNascimento, create.Email, create.Senha);
+            var pessoa = _Service.CreatePessoa(create.Nome, create.Sobrenome, create.DataNascimento, create.Email);
 
             return Created("api/[controller]", pessoa);
         }
@@ -65,11 +65,21 @@ namespace RedeSocialAPI.Controllers
         public ActionResult Put([FromRoute] Guid id, [FromBody] CreatePessoa update)
         {
 
-            var updatePessoa = _Service.UpdatePessoa(id, update.Nome, update.Sobrenome, update.DataNascimento, update.Email, update.Senha, update.UrlImagem);
+            var updatePessoa = _Service.UpdatePessoa(id, update.Nome, update.Sobrenome, update.DataNascimento, update.Email, update.UrlImagem);
 
             return Ok(updatePessoa);
 
         }
 
+        [HttpGet("{email:string}")]
+        public ActionResult getByEmail([FromRoute] string email)
+        {
+            var pessoa = _Service.getByEmail(email);
+
+            if (pessoa == null)
+                return NoContent();
+
+            return Ok(pessoa);
+        }
     }
 }

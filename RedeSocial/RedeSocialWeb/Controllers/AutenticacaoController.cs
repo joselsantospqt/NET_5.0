@@ -82,7 +82,7 @@ namespace RedeSocialWeb.Controllers
             createPessoa.Nome = collection["Nome"];
             createPessoa.Email = collection["Email"];
             createPessoa.DataNascimento = Convert.ToDateTime(collection["DataNascimento"]);
-            createPessoa.Senha = collection["Senha"];
+            //createPessoa.Senha = collection["Senha"];
 
 
             HttpClient httpClient = new HttpClient();

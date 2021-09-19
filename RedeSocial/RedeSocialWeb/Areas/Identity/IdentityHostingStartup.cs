@@ -15,6 +15,11 @@ namespace RedeSocialWeb.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(
+                        context.Configuration.GetConnectionString("connectionString")));
+
+                services.AddDefaultIdentity<IdentityUser>(option => option.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }

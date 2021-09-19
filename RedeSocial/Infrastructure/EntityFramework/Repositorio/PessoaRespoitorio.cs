@@ -49,5 +49,10 @@ namespace Infrastructure.EntityFramework.Repositorio
             _db.SaveChanges();
 
         }
+
+        public Pessoa GetByEmail(string email)
+        {
+            return _db.Pessoa.Where(p => p.Email == email).FirstOrDefault();
+        }
     }
 }
