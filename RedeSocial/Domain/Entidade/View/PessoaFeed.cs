@@ -8,7 +8,9 @@ namespace Domain.Entidade.View
 {
     public class PessoaFeed
     {
-        public Pessoa pessoa { get; set; }
-        public List<Post> Posts { get; set; }
+        public Post Posts { get; set; }
+        public Pessoa AutorPost { get; set; }
+        public List<Comment> Comments { get; set; }
+
     }
 }
