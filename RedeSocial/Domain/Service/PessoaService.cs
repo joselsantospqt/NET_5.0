@@ -25,6 +25,11 @@ namespace Domain.Service
             return RepositorioPessoa.GetById(id);
         }
 
+        public Pessoa GetPesoaEmail(string email)
+        {
+            return RepositorioPessoa.GetByEmail(email);
+        }
+
         public IEnumerable<Pessoa> GetAll()
         {
             return RepositorioPessoa.GetAll();

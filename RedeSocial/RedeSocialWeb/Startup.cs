@@ -44,6 +44,8 @@ namespace RedeSocialWeb
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -51,6 +53,7 @@ namespace RedeSocialWeb
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Autenticacao}/{action=Login}");
+                endpoints.MapRazorPages();
             });
         }
     }
