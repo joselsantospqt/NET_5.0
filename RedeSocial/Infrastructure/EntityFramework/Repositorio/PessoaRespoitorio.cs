@@ -41,13 +41,13 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public void SaveUpdate(Pessoa pessoa)
         {
-            if (pessoa.Id.Equals(new Guid("{00000000-0000-0000-0000-000000000000}")))
+            var exist = _db.Pessoa.Find(pessoa.Id);
+            if (exist == null)
                 _db.Add(pessoa);
             else
                 _db.Update(pessoa);
 
             _db.SaveChanges();
 
-        }        
     }
 }

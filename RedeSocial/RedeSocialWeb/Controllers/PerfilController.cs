@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Infrastructure.BlobStorage;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RedeSocialWeb.Controllers
 {
+    [Authorize]
     public class PerfilController : Controller
     {
         public PerfilController(IConfiguration configuration)
@@ -48,7 +50,7 @@ namespace RedeSocialWeb.Controllers
             var a = Configuration.GetConnectionString("KeyBlobStorage");
             var b = Configuration.GetConnectionString("UrlBlobStorageImagem");
             //CHAMAR AQUI O REPOSITORIO DE BLOBSTORAGE
-            var blobstorage = new ImagemRepositorio("DefaultEndpointsProtocol=https;AccountName=paquetahomologstorage;AccountKey=lPmNaptgPdpehmmtA58M7mYcYOCwikpg06HZ9Cvw3VG/F8U9EqGWF6GQII4jpc9x6mjriXyzuVgkfnb5h6vcQg==;EndpointSuffix=core.windows.net", "https://paquetahomologstorage.blob.core.windows.net/imagens/");
+            var blobstorage = new ImagemRepositorio(Configuration.GetSection("Logging").GetSection("ConnectionStrings")["KeyBlobStorage"], Configuration.GetSection("Logging").GetSection("ConnectionStrings")["UrlBlobStorageImagem"]);
 
             foreach (var item in this.Request.Form.Files)
             {

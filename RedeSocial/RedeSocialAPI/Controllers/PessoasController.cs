@@ -41,11 +41,25 @@ namespace RedeSocialAPI.Controllers
         }
 
 
+        [HttpGet("{email}")]
+        public ActionResult GetByEmail([FromRoute] string email)
+        {
+
+            var pessoa = _Service.GetPesoaEmail(email);
+
+            if (pessoa == null)
+                return NoContent();
+
+            return Ok(pessoa);
+        }
+
+
+
         [HttpPost]
         public ActionResult Pessoa([FromBody] CreatePessoa create)
         {
 
-            var pessoa = _Service.CreatePessoa(create.Nome, create.Sobrenome, create.DataNascimento, create.Email, create.Senha);
+            var pessoa = _Service.CreatePessoa(create.Id, create.Nome, create.Sobrenome, create.DataNascimento, create.Email, create.Senha);
 
             return Created("api/[controller]", pessoa);
         }

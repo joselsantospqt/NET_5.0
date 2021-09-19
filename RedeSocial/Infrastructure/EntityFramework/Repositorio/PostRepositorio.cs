@@ -23,7 +23,7 @@ namespace Infrastructure.EntityFramework.Repositorio
 
         public IEnumerable<Post> GetAll()
         {
-            return _db.Post.Include(x => x.Autor).Include(x => x.Comments).AsNoTracking().ToList();
+            return _db.Post.Include(x => x.Autor).Include(x => x.Comments).ToList();
         }
 
         public Post GetById(Guid id)

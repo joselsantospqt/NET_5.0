@@ -25,6 +25,11 @@ namespace Domain.Service
             return RepositorioPessoa.GetById(id);
         }
 
+        public Pessoa GetPesoaEmail(string email)
+        {
+            return RepositorioPessoa.GetByEmail(email);
+        }
+
         public IEnumerable<Pessoa> GetAll()
         {
             return RepositorioPessoa.GetAll();
@@ -42,7 +47,7 @@ namespace Domain.Service
 
         //}
 
-        public Pessoa CreatePessoa(string nome,
+        public Pessoa CreatePessoa(Guid id, string nome,
             string sobrenome, 
             DateTime dataDeNascimento, 
             string email, string senha
@@ -50,6 +55,7 @@ namespace Domain.Service
         {
 
             var Pessoa = new Pessoa();
+            Pessoa.Id = id;
             Pessoa.Nome = nome;
             Pessoa.Sobrenome = sobrenome;
             Pessoa.DataNascimento = dataDeNascimento;
