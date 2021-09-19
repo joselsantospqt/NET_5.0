@@ -59,7 +59,7 @@ namespace RedeSocialAPI.Controllers
         public ActionResult Pessoa([FromBody] CreatePessoa create)
         {
 
-            var pessoa = _Service.CreatePessoa(create.Nome, create.Sobrenome, create.DataNascimento, create.Email, create.Senha);
+            var pessoa = _Service.CreatePessoa(create.Id, create.Nome, create.Sobrenome, create.DataNascimento, create.Email, create.Senha);
 
             return Created("api/[controller]", pessoa);
         }

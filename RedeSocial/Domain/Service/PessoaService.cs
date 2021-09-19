@@ -47,7 +47,7 @@ namespace Domain.Service
 
         //}
 
-        public Pessoa CreatePessoa(string nome,
+        public Pessoa CreatePessoa(Guid id, string nome,
             string sobrenome, 
             DateTime dataDeNascimento, 
             string email, string senha
@@ -55,6 +55,7 @@ namespace Domain.Service
         {
 
             var Pessoa = new Pessoa();
+            Pessoa.Id = id;
             Pessoa.Nome = nome;
             Pessoa.Sobrenome = sobrenome;
             Pessoa.DataNascimento = dataDeNascimento;

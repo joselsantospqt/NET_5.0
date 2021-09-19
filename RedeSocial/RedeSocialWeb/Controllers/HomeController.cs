@@ -17,45 +17,37 @@ using Microsoft.AspNetCore.Identity;
 
 namespace RedeSocialWeb.Controllers
 {
-
-
-    public class HomeController : Controller
+    [Authorize]
+    public class HomeController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<HomeController> _logger;
-        public IConfiguration Configuration { get; }
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+        public HomeController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager) : base(httpClientFactory, configuration)
         {
             _logger = logger;
-            Configuration = configuration;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            HttpClient _client = new HttpClient();
-            var b = await _userManager.FindByNameAsync(User.Identity.Name);
-
-            string urlApi = $"{Configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Pessoas/{User.Identity.Name}";
-            var resultado = await _client.GetAsync(urlApi);
-            var Json = await resultado.Content.ReadAsStringAsync();
-            Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(Json);
+            var userIdentity = await _userManager.FindByNameAsync(User.Identity.Name);
+            var pessoa = await ApiFindById<Pessoa>(userIdentity.Id, "Pessoas");
             if (pessoa == null)
             {
                 var createPessoa = new CreatePessoa
                 {
+                    Id = Guid.Parse(userIdentity.Id),
                     Email = User.Identity.Name
                 };
-                var jsonTodo = JsonConvert.SerializeObject(createPessoa);
-                var conteudo = new StringContent(jsonTodo, System.Text.Encoding.UTF8, "application/json");
-                urlApi = $"{Configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Pessoas";
-                resultado = await _client.PostAsync(urlApi, conteudo);
-                Json = await resultado.Content.ReadAsStringAsync();
-                Pessoa novaPessoa = JsonConvert.DeserializeObject<Pessoa>(Json);
 
-                return RedirectToAction("Index", "Feed", novaPessoa);
+                var retorno = await ApiSave(createPessoa, "Pessoas");
+
+                return RedirectToAction("Index", "Feed", createPessoa);
             }
 
             return RedirectToAction("Index", "Feed", pessoa);
