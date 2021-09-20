@@ -1,6 +1,7 @@
 ﻿using Domain.Entidade;
 using Domain.Entidade.Request;
 using Domain.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -17,8 +18,8 @@ namespace RedeSocialAPI.Controllers
             _Service = service;
         }
 
-
         [HttpGet("getAll")]
+        [Authorize]
         public ActionResult GetAll()
         {
             var getAllPessoa = _Service.GetAll();

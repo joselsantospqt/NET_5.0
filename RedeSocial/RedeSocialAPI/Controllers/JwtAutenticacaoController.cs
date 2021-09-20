@@ -15,11 +15,11 @@ namespace RedeSocialAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JwtAutenticacao : ControllerBase
+    public class JwtAutenticacaoController : ControllerBase
     {
         private IConfiguration _config;
         private PessoaService _Service;
-        public JwtAutenticacao(IConfiguration Configuration, PessoaService pessoaService)
+        public JwtAutenticacaoController(IConfiguration Configuration, PessoaService pessoaService)
         {
             _config = Configuration;
             _Service = pessoaService;

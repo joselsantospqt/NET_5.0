@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
@@ -38,6 +39,7 @@ namespace RedeSocialAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RedeSocialAPI", Version = "v1" });
             });
+            IdentityModelEventSource.ShowPII = true;
 
             //dbLocal
             services.AddScoped<PostService>();
@@ -46,16 +48,20 @@ namespace RedeSocialAPI
             services.AddInfrastructure(Configuration.GetConnectionString("dbLocal"));
 
             services.AddAuthentication
-                 (JwtBearerDefaults.AuthenticationScheme)
+                 (options => {
+                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                 })
                  .AddJwtBearer(options =>
                  {
+                     options.RequireHttpsMetadata = false;
+                     options.SaveToken = true;
                      options.TokenValidationParameters = new TokenValidationParameters
                      {
-                         ValidateIssuer = true,
-                         ValidateAudience = true,
+                         ValidateIssuer = false,
+                         ValidateAudience = false,
                          ValidateLifetime = true,
                          ValidateIssuerSigningKey = true,
-
                          ValidIssuer = Configuration["Jwt:Issuer"],
                          ValidAudience = Configuration["Jwt:Audience"],
                          IssuerSigningKey = new SymmetricSecurityKey
@@ -72,6 +78,10 @@ namespace RedeSocialAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RedeSocialAPI v1"));
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
