@@ -51,6 +51,7 @@ namespace RedeSocialAPI
             services.AddAuthentication
                  (options => {
                      options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                      options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                  })
                  .AddJwtBearer(options =>
@@ -64,7 +65,7 @@ namespace RedeSocialAPI
                          ValidateLifetime = true,
                          ValidateIssuerSigningKey = true,
                          IssuerSigningKey = new SymmetricSecurityKey
-                       (Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                       (Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]))
                      };
                  });
         }
@@ -87,9 +88,8 @@ namespace RedeSocialAPI
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

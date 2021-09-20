@@ -47,13 +47,13 @@ namespace RedeSocialAPI.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>();
 
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, pessoa.Id.ToString()));
+            claims.Add(new Claim("id", pessoa.Id.ToString()));
 
             var token = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"])), SecurityAlgorithms.HmacSha256),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["Jwt:Key"])), SecurityAlgorithms.HmacSha256),
                 Audience = _config["Jwt:Audience"],
                 Issuer = _config["Jwt:Issuer"]
             };
