@@ -67,7 +67,7 @@ namespace RedeSocialAPI.Controllers
         {
             var pessoa = _Service.GetPessoa(Login.idUsuario);
 
-            if (Login.idUsuario== pessoa.Id)
+            if (pessoa != null)
             {
                 return true;
             }

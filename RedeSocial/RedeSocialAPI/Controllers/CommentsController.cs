@@ -1,5 +1,6 @@
 ﻿using Domain.Entidade;
 using Domain.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -7,6 +8,7 @@ namespace RedeSocialAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CommentsController : ControllerBase
     {
         private CommentService _Service { get; }

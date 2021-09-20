@@ -11,6 +11,12 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Domain.Entidade.Request;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace RedeSocialWeb.Areas.Identity.Pages.Account
 {
@@ -21,14 +27,17 @@ namespace RedeSocialWeb.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
+        public IConfiguration _configuration { get; }
+
+        public HttpClient _httpClient;
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -76,7 +85,7 @@ namespace RedeSocialWeb.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -84,9 +93,14 @@ namespace RedeSocialWeb.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var userIdentity = await _userManager.FindByNameAsync(Input.Email);
+                    this.HttpContext.Session.SetString("UserId", userIdentity.Id);
+                    this.HttpContext.Session.SetString("UserName", userIdentity.Email);
+
                     _logger.LogInformation("User logged in.");
                     return RedirectToAction("Index", "Home");
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });

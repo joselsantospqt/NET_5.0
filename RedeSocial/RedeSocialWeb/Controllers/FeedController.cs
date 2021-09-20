@@ -25,7 +25,6 @@ namespace RedeSocialWeb.Controllers
         public async Task<IActionResult> Index(Pessoa pessoa)
         {
             //COMANDO PARA SALVAR NA SESSION
-            //this.HttpContext.Session.SetString("IdPessoa", result.Token);
             //List<PessoaFeed> obj = new();
 
             //HttpClient httpClient = new HttpClient();
@@ -51,8 +50,8 @@ namespace RedeSocialWeb.Controllers
             //    obj.Add(newObj);
             //}
 
-            var ListaPost = await ApiFind<Post>("Posts/getAll");
-            var ListaComments = await ApiFind<Comment>("Comments/getAll");
+            var ListaPost = await ApiFind<Post>(this.HttpContext.Session.GetString("token"), "Posts/getAll");
+            var ListaComments = await ApiFind<Comment>(this.HttpContext.Session.GetString("token"), "Comments/getAll");
 
 
             var query = from posts in ListaPost

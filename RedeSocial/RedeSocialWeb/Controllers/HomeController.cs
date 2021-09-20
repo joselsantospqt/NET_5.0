@@ -20,36 +20,41 @@ namespace RedeSocialWeb.Controllers
     [Authorize]
     public class HomeController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<HomeController> logger, SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager) : base(httpClientFactory, configuration)
+        public HomeController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<HomeController> logger) : base(httpClientFactory, configuration)
         {
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
+
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var userIdentity = await _userManager.FindByNameAsync(User.Identity.Name);
-            var pessoa = await ApiFindById<Pessoa>(userIdentity.Id, "Pessoas");
-            if (pessoa == null)
+            CredenciaisUsuario Autorizicao = new() { idUsuario = Guid.Parse(this.HttpContext.Session.GetString("UserId")) };
+            var value = await ApiToken(Autorizicao);
+            if (value.Token == null)
             {
                 var createPessoa = new CreatePessoa
                 {
-                    Id = Guid.Parse(userIdentity.Id),
-                    Email = User.Identity.Name
+                    Id = Guid.Parse(this.HttpContext.Session.GetString("UserId")),
+                    Email = this.HttpContext.Session.GetString("UserName")
                 };
 
                 var retorno = await ApiSave(createPessoa, "Pessoas");
+                CredenciaisUsuario credenciais = new(){ idUsuario = createPessoa.Id};
+                value = await ApiToken(credenciais);
+                if (value.Token != null)
+                {
+                    this.HttpContext.Session.SetString("token", value.Token.ToString());
+                    return RedirectToAction("Index", "Feed", createPessoa);
+                }
 
-                return RedirectToAction("Index", "Feed", createPessoa);
+                return RedirectToAction("Autenticacao", "Login");
             }
 
+            this.HttpContext.Session.SetString("token", value.Token.ToString());
+            var pessoa = await ApiFindById<Pessoa>(value.Token.ToString(), this.HttpContext.Session.GetString("UserId"), "Pessoas");
             return RedirectToAction("Index", "Feed", pessoa);
         }
 

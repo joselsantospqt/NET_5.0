@@ -18,6 +18,7 @@ namespace RedeSocialAPI.Controllers
             _Service = service;
         }
 
+        [Authorize]
         [HttpGet("getAll")]
         [Authorize]
         public ActionResult GetAll()
@@ -28,7 +29,7 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet("{id:Guid}")]
         public ActionResult GetById([FromRoute] Guid id)
         {
@@ -65,7 +66,7 @@ namespace RedeSocialAPI.Controllers
             return Created("api/[controller]", pessoa);
         }
 
-
+        [Authorize]
         [HttpDelete("{id:Guid}")]
         public ActionResult Delete(Guid id)
         {
@@ -75,7 +76,7 @@ namespace RedeSocialAPI.Controllers
             return NoContent();
         }
 
-
+        [Authorize]
         [HttpPut("{id:Guid}")]
         public ActionResult Put([FromRoute] Guid id, [FromBody] CreatePessoa update)
         {
@@ -86,6 +87,7 @@ namespace RedeSocialAPI.Controllers
 
         }
 
+        [Authorize]
         [HttpPost("{idPessoa:Guid}/{idAmigo:Guid}")]
         public ActionResult CadastraAmigo([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
         {

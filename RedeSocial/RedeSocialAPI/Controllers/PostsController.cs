@@ -6,11 +6,13 @@ using static System.Guid;
 using System.Linq;
 using Domain.Service;
 using Domain.Entidade;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RedeSocialAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PostsController : ControllerBase
     {
         private PostService _Service;

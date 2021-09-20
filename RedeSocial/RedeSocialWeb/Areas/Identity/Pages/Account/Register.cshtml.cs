@@ -98,6 +98,7 @@ namespace RedeSocialWeb.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        ViewData["Status"] = "Cadastrado Com Sucesso !";
                         return LocalRedirect(returnUrl);
                     }
                 }
