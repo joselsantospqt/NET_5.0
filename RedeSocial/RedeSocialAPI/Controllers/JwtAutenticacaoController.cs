@@ -1,4 +1,5 @@
-﻿using Domain.Entidade.Request;
+﻿using Domain.Entidade;
+using Domain.Entidade.Request;
 using Domain.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,7 +33,8 @@ namespace RedeSocialAPI.Controllers
             bool resultado = ValidarUsuario(Login);
             if (resultado)
             {
-                var tokenString = GerarTokenJWT();
+                var pessoa = _Service.GetPessoa(Login.idUsuario);
+                var tokenString = GerarTokenJWT(pessoa);
                 return Ok(new { token = tokenString });
             }
             else
@@ -39,18 +42,24 @@ namespace RedeSocialAPI.Controllers
                 return Unauthorized();
             }
         }
-        private string GerarTokenJWT()
+        private string GerarTokenJWT(Pessoa pessoa)
         {
-            var issuer = _config["Jwt:Issuer"];
-            var audience = _config["Jwt:Audience"];
-            var expiry = DateTime.Now.AddMinutes(120);
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(issuer: issuer, audience: audience, expires: expiry, signingCredentials: credentials);
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            var stringToken = tokenHandler.WriteToken(token);
+            var claims = new List<Claim>();
+
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, pessoa.Id.ToString()));
+
+            var token = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"])), SecurityAlgorithms.HmacSha256),
+                Audience = _config["Jwt:Audience"],
+                Issuer = _config["Jwt:Issuer"]
+            };
+
+            var securityToken = tokenHandler.CreateToken(token);
+            var stringToken = tokenHandler.WriteToken(securityToken);
             return stringToken;
         }
 
