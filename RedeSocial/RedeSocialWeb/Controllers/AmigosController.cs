@@ -11,9 +11,25 @@ namespace RedeSocialWeb.Controllers
 {
     public class AmigosController : Controller
     {
-        public IActionResult TodosAmigos()
+        //buscar todos as pessoas
+        public IActionResult View()
         {
             return View();
         }
+
+
+        //buscar todos as pessoa por id
+        [HttpPost("id:Guid")]
+        public IActionResult View(Guid id)
+        {
+            return View("Details");
+        }
+
+        [HttpPost]
+        public IActionResult Adicionar()
+        {
+            return View();
+        }
+
     }
 }

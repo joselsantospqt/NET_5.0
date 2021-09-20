@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace RedeSocialWeb.Controllers
 {
-    public abstract class ControllerBase : Controller
+    public abstract class BaseController : Controller
     {
-        protected ControllerBase(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        protected BaseController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClient = httpClientFactory.CreateClient();
             _configuration = configuration;

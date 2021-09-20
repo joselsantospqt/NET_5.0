@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Identity;
 namespace RedeSocialWeb.Controllers
 {
     [Authorize]
-    public class HomeController : ControllerBase
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 

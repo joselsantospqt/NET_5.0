@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace RedeSocialWeb.Controllers
 {
     [Authorize]
-    public class FeedController : ControllerBase
+    public class FeedController : BaseController
     {
         public FeedController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : base(httpClientFactory, configuration)
         {
@@ -50,27 +50,33 @@ namespace RedeSocialWeb.Controllers
             //    obj.Add(newObj);
             //}
 
-            var ListaPost = await ApiFind<Post>(this.HttpContext.Session.GetString("token"), "Posts/getAll");
-            var ListaComments = await ApiFind<Comment>(this.HttpContext.Session.GetString("token"), "Comments/getAll");
+            //var ListaPost = await ApiFind<Post>(this.HttpContext.Session.GetString("token"), "Posts/getAll");
+            //var ListaComments = await ApiFind<Comment>(this.HttpContext.Session.GetString("token"), "Comments/getAll");
 
 
-            var query = from posts in ListaPost
-                        join comments in ListaComments on posts.Id equals comments.Post.PostId
-                        select new { idPost = posts.Id, postMensagem = posts.Message, IdComment = comments.Id, commentsMessage = comments.Text , IdPessoaComment = comments.Pessoa.Id};
+            //var query = from posts in ListaPost
+            //            join comments in ListaComments on posts.Id equals comments.Post.PostId
+            //            select new {idPessoaPost = posts.Autor.PessoaId, idPost = posts.Id, postMensagem = posts.Message, IdComment = comments.Id, commentsMessage = comments.Text , IdPessoaComment = comments.Pessoa.Id};
+
+            //foreach (var item in query) {
+            
+            
+            
+            //}
 
 
-            foreach (var item in query)
-            {
-                Console.WriteLine($"\"{item.idPost}\" is owned by {item.IdComment}");
-            }
+            //foreach (var item in query)
+            //{
+            //    Console.WriteLine($"\"{item.idPost}\" is owned by {item.IdComment}");
+            //}
 
 
-            ViewData["ID"] = pessoa.Id;
-            ViewData["Email"] = pessoa.Email;
-            //var blobstorage = new ImagemRepositorio(Configuration.GetConnectionString("KeyBlobStorage"), Configuration.GetConnectionString("UrlBlobStorageImagem"));
-            ViewData["url"] = "https://img.ibxk.com.br/2017/06/22/22100428046161.jpg?w=1120&h=420&mode=crop&scale=both";
+            //ViewData["ID"] = pessoa.Id;
+            //ViewData["Email"] = pessoa.Email;
+            ////var blobstorage = new ImagemRepositorio(Configuration.GetConnectionString("KeyBlobStorage"), Configuration.GetConnectionString("UrlBlobStorageImagem"));
+            //ViewData["url"] = "https://img.ibxk.com.br/2017/06/22/22100428046161.jpg?w=1120&h=420&mode=crop&scale=both";
 
-            return View(query);
+            return View();
         }
 
         public async Task<IActionResult> trazerDadosComent(String urlApi)
