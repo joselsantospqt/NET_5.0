@@ -4,6 +4,7 @@ using Domain.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace RedeSocialAPI.Controllers
 {
@@ -89,20 +90,27 @@ namespace RedeSocialAPI.Controllers
         }
 
         [Authorize]
-        [HttpPost("{idPessoa:Guid}/{idAmigo:Guid}")]
+        [HttpPost("/cadastrarAmigo/{idPessoa:Guid}/{idAmigo:Guid}")]
         public ActionResult CadastraAmigo([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
         {
             var pessoa = _Service.CadastraAmigo(idPessoa, idAmigo);
             return Ok(pessoa);
         }
 
-        //[Authorize]
-        //[HttpGet("{idPessoa:Guid}/{idAmigo:Guid}")]
-        //public ActionResult todoAmigos([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
-        //{
-        //    var pessoa = _Service.CadastraAmigo(idPessoa, idAmigo);
-        //    return Ok(pessoa);
-        //}
+        [Authorize]
+        [HttpGet("/getTodosAmigos/{idPessoa:Guid}")]
+        public ActionResult todosAmigos([FromRoute] Guid id)
+        {
+            var pessoa = _Service.GetPessoa(id);
+            var listaAmigos = new List<Pessoa>();
+
+            foreach (var item in pessoa.Amigos)
+            {
+                var amigo = _Service.GetPessoa(item.AmigoId);
+                listaAmigos.Add(amigo);
+            }
+            return Ok(listaAmigos);
+        }
 
         [Authorize]
         [HttpDelete("/removerAmigo/{idPessoa:Guid}/{idAmigo:Guid}")]
