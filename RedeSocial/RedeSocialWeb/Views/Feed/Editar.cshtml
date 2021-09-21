@@ -1,0 +1,58 @@
+﻿@model Domain.Entidade.Post
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="page-content">
+
+    <h1>Editar</h1>
+
+    <h4>Post</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Editar" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group d-none">
+                    <label asp-for="Id" class="control-label" readonly></label>
+                    <input asp-for="Id" name="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Message" class="control-label"></label>
+                    <input asp-for="Message" name="Message" class="form-control" />
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@Model.ImagemUrlPost" width="320px" height="320px"/>
+                    <label asp-for="ImagemUrlPost" class="control-label"></label>
+                    <input type="file" asp-for="ImagemUrlPost" name="ImagemUrlPost" class="form-control" />
+                    <span asp-validation-for="ImagemUrlPost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CreatedAt" class="control-label"></label>
+                    <input asp-for="CreatedAt" name="CreatedAt" class="form-control" readonly/>
+                    <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                </div>
+                <div class="form-group d-none">
+                    <label asp-for="UpdatedAt" class="control-label"></label>
+                    <input asp-for="UpdatedAt"  name="UpdatedAt" class="form-control" />
+                    <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Editar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

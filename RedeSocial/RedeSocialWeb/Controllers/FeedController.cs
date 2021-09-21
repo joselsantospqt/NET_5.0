@@ -81,7 +81,7 @@ namespace RedeSocialWeb.Controllers
 
             if (existeImagem)
             {
-                post = new() { Message = collection["message"], ImagemUrl = $"{fileName}"};
+                post = new() { Message = collection["message"], ImagemUrl = $"{fileName}" };
             }
             else
                 post = new() { Message = collection["message"], ImagemUrl = "Post_default.png" };
@@ -97,9 +97,6 @@ namespace RedeSocialWeb.Controllers
                 else
                     await _blobstorage.SaveUpdate(fileName, ms);
             }
-
-
-
             return RedirectToAction("Index");
         }
 
@@ -107,13 +104,82 @@ namespace RedeSocialWeb.Controllers
 
         [HttpGet]
         [Route("Feed/GetTodosPosts/{Id:guid}")]
-        public async Task<IActionResult> TodosAmigos(Guid id)
+        public async Task<IActionResult> TodosPosts(Guid id)
         {
-            var ListaDePost = await ApiFindAllById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts/getTodosPosts");
-
             await CarregaDadosPessoa();
+            var ListaDePost = await ApiFindAllById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts/getTodosPosts");
+            return View(ListaDePost.OrderByDescending(x => x.UpdatedAt));
+        }
 
-            return View(ListaDePost);
+        [HttpGet]
+        [Route("Feed/Editar/{Id:guid}")]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            await CarregaDadosPessoa();
+            var post = await ApiFindById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts");
+            return View(post);
+        }
+
+
+        [HttpPost]
+        [Route("Feed/Editar/{Id:guid}")]
+        public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
+        {
+            var existeImagem = false;
+            MemoryStream ms = new MemoryStream();
+            var fileName = $"Post_{id}_.png";
+            CreatePost UpdatePost = new();
+            foreach (var item in this.Request.Form.Files)
+            {
+                existeImagem = true;
+
+                item.CopyTo(ms);
+
+                ms.Position = 0;
+            }
+
+
+            if (existeImagem)
+            {
+                await _blobstorage.SaveUpdate(fileName, ms);
+                UpdatePost = new() { Message = collection["message"], ImagemUrl = $"{fileName}" };
+            }
+            else
+                UpdatePost = new() { Message = collection["message"], ImagemUrl = "Post_default.png" };
+
+            var retorno = await ApiUpdate<Post>(this.HttpContext.Session.GetString("token"), id, UpdatePost, "Posts");
+
+            return RedirectToAction("Index", "Feed");
+        }
+
+        [HttpGet]
+        [Route("Feed/Excluir/{Id:guid}")]
+        public async Task<IActionResult> Excluir(Guid id)
+        {
+            await CarregaDadosPessoa();
+            Post post = await ApiFindById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts");
+            return View(post);
+        }
+
+        [HttpPost]
+        [Route("Feed/ExcluirPost")]
+        public async Task<IActionResult> ExcluirPost(Guid id)
+        {
+            await CarregaDadosPessoa();
+            Post post = await ApiFindById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts");
+            await _blobstorage.Remove(post.ImagemUrlPost);
+            var retorno = await ApiRemove(this.HttpContext.Session.GetString("token"), id, "Posts");
+            return RedirectToAction("Index", "Feed");
+
+        }
+
+        [HttpGet]
+        [Route("Feed/Detalhes/{Id:guid}")]
+        public async Task<IActionResult> Detalhes(Guid id)
+        {
+            await CarregaDadosPessoa();
+            var post = await ApiFindById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts");
+            return View(post);
         }
 
     }

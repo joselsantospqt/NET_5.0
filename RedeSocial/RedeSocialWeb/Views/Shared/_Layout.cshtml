@@ -68,7 +68,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="/perfil/perfilusuario">
+                                    <a class="dropdown-item" asp-controller="Perfil" asp-action="Detalhes" asp-route-id="@pessoaId">
                                         <div class="d-flex align-items-center">
                                             <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@pessoaImagem" alt="" class="rounded-circle" width="54" height="54">
                                             <div class="ms-3">
@@ -137,7 +137,7 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-controller="Feed" asp-action="TodosAmigos" asp-route-id="@pessoaId">
+                    <a asp-controller="Feed" asp-action="TodosPosts" asp-route-id="@pessoaId">
                         <div class="fm-icon-box">
                             <i class="bi bi-file-earmark-break-fill"></i>
                         </div>

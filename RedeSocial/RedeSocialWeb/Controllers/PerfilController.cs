@@ -88,8 +88,8 @@ namespace RedeSocialWeb.Controllers
             else
                 await _blobstorage.SaveUpdate(fileName, ms);
 
+            return Redirect(retorno.Id.ToString());
 
-            return RedirectToRoute("Perfil/Detalhes/", retorno.Id);
         }
 
         [HttpGet]
@@ -98,10 +98,18 @@ namespace RedeSocialWeb.Controllers
         {
             var retorno = await ApiRemove(this.HttpContext.Session.GetString("token"), id, "Pessoas");
             if (retorno.IsSuccessStatusCode)
-                return RedirectToAction("Login", "Autenticacao");
+                return RedirectToAction("Delete", "Autenticacao");
 
             return View();
         }
+
+        [HttpGet]
+        [Route("Perfil/PainelAdm")]
+        public IActionResult PainelAdm ()
+        {
+                return RedirectToAction("PainelAdm", "Autenticacao");
+        }
+
 
         [HttpGet]
         [Route("Perfil/ExcluirImagem/{Id:guid}")]
@@ -111,7 +119,8 @@ namespace RedeSocialWeb.Controllers
             await _blobstorage.Remove(pessoa.ImagemUrlPessoa);
             pessoa.ImagemUrlPessoa = "Perfil_default.png";
             var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"), id, pessoa, "Pessoas");
-            return RedirectToRoute("Perfil/Detalhes/", retorno.Id);
+
+            return RedirectToAction("Index", "Feed");
         }
 
         [HttpGet]
