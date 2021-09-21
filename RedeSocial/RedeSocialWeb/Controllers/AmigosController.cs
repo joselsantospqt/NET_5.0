@@ -53,7 +53,7 @@ namespace RedeSocialWeb.Controllers
         }
 
 
-        public async Task<IActionResult> RemoveById(Guid id)
+        public async Task<IActionResult> RemoveAmigoById(Guid id)
         {
             var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"), 
                 this.HttpContext.Session.GetString("UserId"), new { idAmigo = id }, "Pessoas/removerAmigo");
