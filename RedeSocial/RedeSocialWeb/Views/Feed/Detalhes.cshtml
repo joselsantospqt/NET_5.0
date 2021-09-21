@@ -1,0 +1,51 @@
+﻿@model Domain.Entidade.Post
+
+@{
+    ViewData["Title"] = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="page-content">
+    <h1>Detalhes</h1>
+
+    <div>
+        <h4>Post</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Message)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Message)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ImagemUrlPost)
+            </dt>
+            <dd class="col-sm-10">
+                <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@Model.ImagemUrlPost" width="320px" height="320px"/>
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreatedAt)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UpdatedAt)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        @Html.ActionLink("Editar", "Editar", new {  id = Model.Id }) |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</main>

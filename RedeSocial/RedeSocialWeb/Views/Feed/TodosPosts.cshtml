@@ -8,15 +8,12 @@
 <main class="page-content">
 
 
-    <h1>Pots</h1>
+    <h1>Posts</h1>
 
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
     <table class="table">
         <thead>
             <tr>
-                <th>
+                <th class="d-none">
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
                 <th>
@@ -38,14 +35,14 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td class="d-none">
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Message)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ImagemUrlPost)
+                        <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@item.ImagemUrlPost"  width="320px" height="320px"/>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedAt)
@@ -54,9 +51,9 @@
                         @Html.DisplayFor(modelItem => item.UpdatedAt)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        @Html.ActionLink("Editar", "Editar", new { id = item.Id }) |
+                        @Html.ActionLink("Detalhes", "Detalhes", new { id = item.Id }) |
+                        @Html.ActionLink("Deletar", "Excluir", new { id = item.Id })
                     </td>
                 </tr>
             }

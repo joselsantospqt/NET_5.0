@@ -17,5 +17,15 @@ namespace RedeSocialWeb.Controllers
         {
             return Redirect("/Identity/Account/Login");
         }
+
+        public IActionResult Delete()
+        {
+            return Redirect("/Identity/Account/Manage/DeletePersonalData");
+        }
+
+        public IActionResult PainelAdm()
+        {
+            return Redirect("/Identity/Account/Manage");
+        }
     }
 }
