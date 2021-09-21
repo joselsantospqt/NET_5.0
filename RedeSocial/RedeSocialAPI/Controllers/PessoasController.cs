@@ -117,9 +117,9 @@ namespace RedeSocialAPI.Controllers
             return Ok(listaAmigos);
         }
 
-        [HttpDelete("/removerAmigo/{idPessoa:Guid}/{idAmigo:Guid}")]
+        [HttpPut("/removerAmigo/{idPessoa:Guid}")]
         [Authorize]
-        public ActionResult removerAmigosById([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
+        public ActionResult removerAmigosById([FromRoute] Guid idPessoa, [FromBody] Guid idAmigo)
         {
             var pessoa = _Service.GetPessoa(idPessoa);
 

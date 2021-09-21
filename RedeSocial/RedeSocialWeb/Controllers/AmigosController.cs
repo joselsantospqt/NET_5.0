@@ -17,24 +17,25 @@ namespace RedeSocialWeb.Controllers
     public class AmigosController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-        public AmigosController(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<HomeController> logger) : base(httpClientFactory, configuration)
+        public AmigosController(IHttpClientFactory httpClientFactory, 
+            IConfiguration configuration, ILogger<HomeController> logger) : base(httpClientFactory, configuration)
         {
             _logger = logger;
         }
 
-        //public IActionResult List(List<Pessoa> retorno)
-        //{
-
-        //    return View(retorno);
-        //}
-
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> View()
         {
             var retorno = await ApiFind<Pessoa>(this.HttpContext.Session.GetString("token"), "Pessoas/getAll");
 
             return View(retorno);
         }
+        public async Task<IActionResult> List()
+        {
+            var retorno = await ApiFindAllById<Pessoa>(this.HttpContext.Session.GetString("token"), 
+                this.HttpContext.Session.GetString("UserId"), "Pessoas/getTodosAmigos");
 
+            return View(retorno);
+        }
 
         //buscar a pessoa por id
         public async Task<IActionResult> Details(Guid id)
@@ -45,19 +46,19 @@ namespace RedeSocialWeb.Controllers
 
         public async Task<IActionResult> Adicionar(Guid id)
         {
-            //await ApiSaveAutorize(this.HttpContext.Session.GetString("token"), 
-            //    new { idPessoa = this.HttpContext.Session.GetString("UserId"), idAmigo = id }, "Pessoas/cadastrarAmigo/");
+            await ApiSaveAutorize<Pessoa>(this.HttpContext.Session.GetString("token"), 
+                new { idPessoa = this.HttpContext.Session.GetString("UserId"), idAmigo = id }, "Pessoas/cadastrarAmigo");
 
             return RedirectToAction("List");
         }
 
-        public async Task<IActionResult> ListaAmigos()
+
+        public async Task<IActionResult> RemoveById(Guid id)
         {
-            var retorno = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), this.HttpContext.Session.GetString("UserId"), "Pessoas/getTodosAmigos/");
+            var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"), 
+                this.HttpContext.Session.GetString("UserId"), new { idAmigo = id }, "Pessoas/removerAmigo");
 
-            //var listId = 
-
-            return View(retorno);
+            return RedirectToAction("List");
         }
 
     }
