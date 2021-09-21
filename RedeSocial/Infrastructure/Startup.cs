@@ -1,4 +1,5 @@
 ﻿using Domain.Repositorio;
+using Infrastructure.BlobStorage;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Repositorio;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,8 @@ namespace Infrastructure
             services.AddScoped<IPostRepositorio, PostRepositorio>();
             services.AddScoped<IPessoaRepositorio, PessoaRepositorio>();
             services.AddScoped<ICommentRepositorio, CommentRepositorio>();
+            services.AddScoped<IImagemRepositorio, ImagemRepositorio>();
+
         }
     }
 }

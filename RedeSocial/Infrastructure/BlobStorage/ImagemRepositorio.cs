@@ -17,7 +17,6 @@ namespace Infrastructure.BlobStorage
 
         public ImagemRepositorio(string connectionString, string urlBlobStorageImagem)
         {
-            //Configuration.GetConnectionString("dbLocalTrust")
             BlobServiceClient = new BlobServiceClient(connectionString);
             UrlBlobStorageImagem = urlBlobStorageImagem;
             ContainerClient = BlobServiceClient.GetBlobContainerClient("imagens");
@@ -25,7 +24,6 @@ namespace Infrastructure.BlobStorage
 
         public string GetById(string fileName)
         {
-            //var blobClient = ContainerClient.GetBlobClient($"{UrlBlobStorageImagem}{id}");
             return $"{UrlBlobStorageImagem}{fileName}";
         }
 
