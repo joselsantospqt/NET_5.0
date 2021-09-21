@@ -140,15 +140,21 @@
 
                 <li class="menu-label">Sua rede</li>
                 <li>
-                    <a href="/amigos/todosamigos">
+                    <a asp-controller="Amigos" asp-action="View">
                         <div class="">
                             <i class="bi bi-people-fill"></i>
                         </div>
                         <div class="menu-title">Ver Amigos</div>
                     </a>
+                    <a asp-controller="Amigos" asp-action="List">
+                        <div class="">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="menu-title">Pessoas da Rede</div>
+                    </a>
                 </li>
 
-                <li class="menu-label">Perfil</li>
+                @*<li class="menu-label">Perfil</li>
                 <li>
                     
                         <div class="menu-title"> <i class="bi bi-person-lines-fill"></i> Opções de perfil</div>
@@ -164,9 +170,9 @@
                             <a href="/perfil/excluirconta"><i class="bi bi-circle"></i>Excluir conta</a>
                         </li>
                     </ul>
-                </li>
+                </li>*@
 
-                <li class="menu-label">Trilhas</li>
+                @*<li class="menu-label">Trilhas</li>
                 <li>
                     
                         
@@ -186,18 +192,7 @@
                             <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Excluir trilha</a>
                         </li>
                     </ul>
-                </li>
-
-                <li class="menu-label"></li>
-                <li>
-                    <a href="/autenticacao/login">
-                        <div class="parent-icon">
-                            <i class="bi bi-lock-fill"></i>
-                        </div>
-                        <div class="menu-title">Sair</div>
-                    </a>
-                </li>
-
+                </li>*@
             </ul>
             <!--fim navegação-->
         </aside>
