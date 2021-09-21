@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
-using Infrastructure.BlobStorage;
+using RedeSocialWeb.Models;
 
 namespace RedeSocialWeb.Controllers
 {

@@ -12,7 +12,6 @@ using Domain.Entidade.View;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
-using Infrastructure.BlobStorage;
 using Microsoft.Extensions.Hosting;
 
 namespace RedeSocialWeb.Controllers
@@ -56,7 +55,7 @@ namespace RedeSocialWeb.Controllers
             else
                 ViewData["MensagemRetorno"] = "Houve Um erro durante o comentário !";
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
