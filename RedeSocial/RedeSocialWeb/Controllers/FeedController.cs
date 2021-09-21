@@ -12,6 +12,8 @@ using Domain.Entidade.View;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
+using Infrastructure.BlobStorage;
+using Microsoft.Extensions.Hosting;
 
 namespace RedeSocialWeb.Controllers
 {
@@ -20,16 +22,17 @@ namespace RedeSocialWeb.Controllers
     {
         public FeedController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : base(httpClientFactory, configuration)
         {
-
+            _blobstorage = new ImagemRepositorio(configuration.GetSection("Logging").GetSection("ConnectionStrings")["KeyBlobStorage"], configuration.GetSection("Logging").GetSection("ConnectionStrings")["UrlBlobStorageImagem"]);
         }
+
+
+        private ImagemRepositorio _blobstorage;
 
         public async Task<IActionResult> Index()
         {
             var ListaDePost = await ApiFind<ItemPost>(this.HttpContext.Session.GetString("token"), "Posts/getAllFeed");
 
             await CarregaDadosPessoa();
-
-            ////var blobstorage = new ImagemRepositorio(Configuration.GetConnectionString("KeyBlobStorage"), Configuration.GetConnectionString("UrlBlobStorageImagem"));
 
             return View(ListaDePost);
         }
@@ -62,29 +65,26 @@ namespace RedeSocialWeb.Controllers
         {
 
             var existeImagem = false;
+            MemoryStream ms = new MemoryStream();
+            var fileName = $"Post_{id}_.png";
 
             foreach (var item in this.Request.Form.Files)
             {
                 existeImagem = true;
-                MemoryStream ms = new MemoryStream();
 
                 item.CopyTo(ms);
 
                 ms.Position = 0;
-
-                var fileName = $"Imagem_Post_{id}_.png";
-
-                //blobstorage.SaveUpdate(fileName, ms);
             }
 
             CreatePost post = new();
 
             if (existeImagem)
             {
-                post = new() { Message = collection["message"], ImagemUrl = $"Imagem_Post_{id}_.png" };
+                post = new() { Message = collection["message"], ImagemUrl = $"{fileName}"};
             }
             else
-                post = new() { Message = collection["message"], ImagemUrl = "" };
+                post = new() { Message = collection["message"], ImagemUrl = "Post_default.png" };
 
             if (post.Message != null)
             {
@@ -94,11 +94,26 @@ namespace RedeSocialWeb.Controllers
                 {
                     ViewData["MensagemRetorno"] = "Houve Um erro durante o post !";
                 }
+                else
+                    await _blobstorage.SaveUpdate(fileName, ms);
             }
 
 
 
             return RedirectToAction("Index");
+        }
+
+
+
+        [HttpGet]
+        [Route("Feed/GetTodosPosts/{Id:guid}")]
+        public async Task<IActionResult> TodosAmigos(Guid id)
+        {
+            var ListaDePost = await ApiFindAllById<Post>(this.HttpContext.Session.GetString("token"), id, "Posts/getTodosPosts");
+
+            await CarregaDadosPessoa();
+
+            return View(ListaDePost);
         }
 
     }

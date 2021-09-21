@@ -10,8 +10,8 @@ namespace Domain.Repositorio
     public interface IImagemRepositorio
     {
         string GetById(string fileName);
-        void Remove(string fileName);
+        Task Remove(string fileName);
         IEnumerable<string> GetAll();
-        void SaveUpdate(string fileName, MemoryStream ms);
+        Task SaveUpdate(string fileName, MemoryStream ms);
     }
 }

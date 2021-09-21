@@ -10,14 +10,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using Infrastructure.BlobStorage;
 
 namespace RedeSocialWeb.Controllers
 {
     [Authorize]
     public class PerfilController : BaseController
     {
+        private ImagemRepositorio _blobstorage;
+
         public PerfilController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : base(httpClientFactory, configuration)
         {
+            _blobstorage = new ImagemRepositorio(configuration.GetSection("Logging").GetSection("ConnectionStrings")["KeyBlobStorage"], configuration.GetSection("Logging").GetSection("ConnectionStrings")["UrlBlobStorageImagem"]);
         }
 
         public IConfiguration Configuration { get; }
@@ -53,25 +57,23 @@ namespace RedeSocialWeb.Controllers
         {
             var existeImagem = false;
 
+            MemoryStream ms = new MemoryStream();
+            var fileName = $"Perfil_{id}_.png";
+
             foreach (var item in this.Request.Form.Files)
             {
                 existeImagem = true;
-                MemoryStream ms = new MemoryStream();
 
                 item.CopyTo(ms);
 
                 ms.Position = 0;
-
-                var fileName = $"Perfil_{id}_.png";
-
-                //blobstorage.SaveUpdate(fileName, ms);
             }
 
             Pessoa pessoa = new();
 
             if (existeImagem)
             {
-                pessoa = new() { Nome = collection["Nome"], Sobrenome = collection["Sobrenome"], ImagemUrlPessoa = $"Perfil_{id}_.png" };
+                pessoa = new() { Nome = collection["Nome"], Sobrenome = collection["Sobrenome"], ImagemUrlPessoa = $"{fileName}" };
             }
             else
                 pessoa = new() { Nome = collection["Nome"], Sobrenome = collection["Sobrenome"], ImagemUrlPessoa = "Perfil_default.png" };
@@ -83,19 +85,33 @@ namespace RedeSocialWeb.Controllers
             {
                 ViewData["MensagemRetorno"] = "Houve Um erro durante o post !";
             }
+            else
+                await _blobstorage.SaveUpdate(fileName, ms);
 
-            return View(retorno);
+
+            return RedirectToRoute("Perfil/Detalhes/", retorno.Id);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Perfil/Excluir/{Id:guid}")]
         public async Task<IActionResult> Excluir(Guid id)
         {
             var retorno = await ApiRemove(this.HttpContext.Session.GetString("token"), id, "Pessoas");
             if (retorno.IsSuccessStatusCode)
-                Redirect("/Identity/Account/Login");
+                return RedirectToAction("Login", "Autenticacao");
 
             return View();
+        }
+
+        [HttpGet]
+        [Route("Perfil/ExcluirImagem/{Id:guid}")]
+        public async Task<IActionResult> ExcluirImagem(Guid id)
+        {
+            Pessoa pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), id, "Pessoas");
+            await _blobstorage.Remove(pessoa.ImagemUrlPessoa);
+            pessoa.ImagemUrlPessoa = "Perfil_default.png";
+            var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"), id, pessoa, "Pessoas");
+            return RedirectToRoute("Perfil/Detalhes/", retorno.Id);
         }
 
         [HttpGet]

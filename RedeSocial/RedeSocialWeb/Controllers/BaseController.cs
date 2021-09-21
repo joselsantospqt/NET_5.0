@@ -46,6 +46,15 @@ namespace RedeSocialWeb.Controllers
             return JsonConvert.DeserializeObject<List<TipoRetorno>>(conteudo);
         }
 
+        public async Task<List<TipoRetorno>> ApiFindAllById<TipoRetorno>(string jwt, Object id, string path)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
+            var reponse = await _httpClient.GetAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}/{id}");
+            var conteudo = await reponse.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<TipoRetorno>>(conteudo);
+        }
+
+
         public async Task<TipoRetorno> ApiFindById<TipoRetorno>(string jwt, Object id, string path)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);

@@ -27,14 +27,14 @@ namespace Domain.Service
             return ImagemRepositorio.GetById(fileName);
         }
 
-        public void Remove(string fileName)
+        public async Task Remove(string fileName)
         {
-            throw new NotImplementedException();
+            await ImagemRepositorio.Remove(fileName);
         }
 
-        public void SaveUpdate(string fileName, MemoryStream ms)
+        public async Task SaveUpdate(string fileName, MemoryStream ms)
         {
-            ImagemRepositorio.SaveUpdate(fileName, ms);
+            await ImagemRepositorio.SaveUpdate(fileName, ms);
         }
     }
 }

@@ -100,7 +100,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" asp-controller="Aunteticacao" asp-action="Index">
+                                    <a class="dropdown-item" asp-controller="Aunteticacao" asp-action="Login">
                                         <div class="d-flex align-items-center">
                                             <div class=""><i class="bi bi-lock-fill"></i></div>
                                             <div class="ms-3"><span>Sair</span></div>
@@ -136,6 +136,14 @@
                         <div class="menu-title">Seu feed</div>
                     </a>
                 </li>
+                <li>
+                    <a asp-controller="Feed" asp-action="TodosAmigos" asp-route-id="@pessoaId">
+                        <div class="fm-icon-box">
+                            <i class="bi bi-file-earmark-break-fill"></i>
+                        </div>
+                        <div class="menu-title">Seu Posts</div>
+                    </a>
+                </li>
 
                 <li class="menu-label">Sua rede</li>
                 <li>
@@ -154,44 +162,44 @@
                 </li>
 
                 @*<li class="menu-label">Perfil</li>
+        <li>
+
+                <div class="menu-title"> <i class="bi bi-person-lines-fill"></i> Opções de perfil</div>
+
+            <ul>
                 <li>
-                    
-                        <div class="menu-title"> <i class="bi bi-person-lines-fill"></i> Opções de perfil</div>
-                    
-                    <ul>
-                        <li>
-                            <a href="/perfil/perfilusuario"><i class="bi bi-circle"></i>Ver perfil</a>
-                        </li>
-                        <li>
-                            <a href="/perfil/editarperfil"><i class="bi bi-circle"></i>Editar perfil</a>
-                        </li>
-                        <li>
-                            <a href="/perfil/excluirconta"><i class="bi bi-circle"></i>Excluir conta</a>
-                        </li>
-                    </ul>
-                </li>*@
+                    <a href="/perfil/perfilusuario"><i class="bi bi-circle"></i>Ver perfil</a>
+                </li>
+                <li>
+                    <a href="/perfil/editarperfil"><i class="bi bi-circle"></i>Editar perfil</a>
+                </li>
+                <li>
+                    <a href="/perfil/excluirconta"><i class="bi bi-circle"></i>Excluir conta</a>
+                </li>
+            </ul>
+        </li>*@
 
                 @*<li class="menu-label">Trilhas</li>
+        <li>
+
+
+                <div class="menu-title"><i class="bi bi-compass"></i> Opções de Trilhas</div>
+
+            <ul>
                 <li>
-                    
-                        
-                        <div class="menu-title"><i class="bi bi-compass"></i> Opções de Trilhas</div>
-                    
-                    <ul>
-                        <li>
-                            <a href="/trilhas/trilhasconfirmadas"><i class="bi bi-circle"></i>Trilhas confirmadas</a>
-                        </li>
-                        <li>
-                            <a href="/trilhas/criartrilha"><i class="bi bi-circle"></i>Criar trilha</a>
-                        </li>
-                        <li>
-                            <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Editar trilha</a>
-                        </li>
-                        <li>
-                            <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Excluir trilha</a>
-                        </li>
-                    </ul>
-                </li>*@
+                    <a href="/trilhas/trilhasconfirmadas"><i class="bi bi-circle"></i>Trilhas confirmadas</a>
+                </li>
+                <li>
+                    <a href="/trilhas/criartrilha"><i class="bi bi-circle"></i>Criar trilha</a>
+                </li>
+                <li>
+                    <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Editar trilha</a>
+                </li>
+                <li>
+                    <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Excluir trilha</a>
+                </li>
+            </ul>
+        </li>*@
             </ul>
             <!--fim navegação-->
         </aside>

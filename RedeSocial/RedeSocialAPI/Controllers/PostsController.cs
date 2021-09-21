@@ -35,7 +35,7 @@ namespace RedeSocialAPI.Controllers
 
             GerarPostsFeed(todosPosts, ListaDePost);
 
-            return Ok(ListaDePost);
+            return Ok(ListaDePost.OrderByDescending(x => x.CreatedAt));
         }
 
         private void GerarPostsFeed(IEnumerable<Post> todosPosts, IList<ItemPost> ListaDePost)
@@ -123,6 +123,20 @@ namespace RedeSocialAPI.Controllers
 
             return Ok(updatePost);
 
+        }
+
+        [HttpGet("getTodosPosts/{id:Guid}")]
+        public ActionResult TodosPosts([FromRoute] Guid id)
+        {
+            var pessoa = _ServicePessoa.GetPessoa(id);
+            var listaPosts = new List<Post>();
+
+            foreach (var item in pessoa.Posts)
+            {
+                var post = _ServicePost.GetPost(item.PostId);
+                listaPosts.Add(post);
+            }
+            return Ok(listaPosts);
         }
 
     }

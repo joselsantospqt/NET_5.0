@@ -27,9 +27,13 @@ namespace Infrastructure.BlobStorage
             return $"{UrlBlobStorageImagem}{fileName}";
         }
 
-        public void Remove(string fileName)
+        public async Task Remove(string fileName)
         {
-            throw new NotImplementedException();
+            BlobClient blobClient = ContainerClient.GetBlobClient(fileName);
+            var existe = await blobClient.ExistsAsync();
+            if (existe.Value == true)
+                if (fileName != "Perfil_default.png" || fileName != "Post_default.png")
+                    await blobClient.UndeleteAsync();
         }
 
         public IEnumerable<string> GetAll()
@@ -37,10 +41,14 @@ namespace Infrastructure.BlobStorage
             throw new NotImplementedException();
         }
 
-        public void SaveUpdate(string fileName, MemoryStream ms)
+        public async Task SaveUpdate(string fileName, MemoryStream ms)
         {
             BlobClient blobClient = ContainerClient.GetBlobClient(fileName);
-            blobClient.Upload(ms);
+            var existe = await blobClient.ExistsAsync();
+            if (existe.Value == true)
+                await blobClient.DeleteIfExistsAsync();
+
+            await blobClient.UploadAsync(ms);
         }
     }
 }
