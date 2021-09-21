@@ -48,8 +48,8 @@ namespace Domain.Service
         //}
 
         public Pessoa CreatePessoa(Guid id, string nome,
-            string sobrenome, 
-            DateTime dataDeNascimento, 
+            string sobrenome,
+            DateTime dataDeNascimento,
             string email, string senha
            )
         {
@@ -69,28 +69,34 @@ namespace Domain.Service
             return Pessoa;
         }
 
-        public Pessoa UpdatePessoa(Guid id,
-            string nome,
-            string sobrenome,
-            DateTime dataDeNascimento,
-            string email, string senha, string urlImagem)
+        public Pessoa UpdatePessoa(Pessoa pessoaUpdate)
         {
 
-            var Pessoa = RepositorioPessoa.GetById(id);
-            Pessoa.Nome = nome;
-            Pessoa.Sobrenome = sobrenome;
-            Pessoa.DataNascimento = dataDeNascimento;
-            Pessoa.Email = email;
-            Pessoa.Senha = senha;
-            Pessoa.ImagemUrlPessoa = urlImagem;
-            Pessoa.UpdatedAt = DateTime.UtcNow;
+            var pessoa = RepositorioPessoa.GetById(pessoaUpdate.Id);
+            if (pessoaUpdate.Nome != null)
+                pessoa.Nome = pessoaUpdate.Nome;
+            if (pessoaUpdate.Sobrenome != null)
+                pessoa.Sobrenome = pessoaUpdate.Sobrenome;
+            if (pessoaUpdate.DataNascimento != new DateTime())
+                pessoa.DataNascimento = pessoaUpdate.DataNascimento;
+            if (pessoaUpdate.Email != null)
+                pessoa.Email = pessoaUpdate.Email;
+            if (pessoaUpdate.Senha != null)
+                pessoa.Senha = pessoaUpdate.Senha;
+            if (pessoaUpdate.ImagemUrlPessoa != null)
+                pessoa.ImagemUrlPessoa = pessoaUpdate.ImagemUrlPessoa;
+            if (pessoaUpdate.Amigos != null)
+                pessoa.Amigos = pessoaUpdate.Amigos;
+            if (pessoaUpdate.Posts != null)
+                pessoa.Posts = pessoaUpdate.Posts;
+            pessoa.UpdatedAt = DateTime.UtcNow;
 
-            RepositorioPessoa.SaveUpdate(Pessoa);
+            RepositorioPessoa.SaveUpdate(pessoa);
 
             //CRIAR UM RETORNO PARA SAVEUPDATE PARA VERIFICAR SE FOI PERSISTIDO A IMAGEM
             //DEPOIS INCLUIR O REPOSITORIO DA UPLOAD DE IMAGEM AQUI
 
-            return Pessoa;
+            return pessoa;
         }
 
 

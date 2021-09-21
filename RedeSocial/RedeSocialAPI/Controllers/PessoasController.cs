@@ -78,10 +78,11 @@ namespace RedeSocialAPI.Controllers
 
         [Authorize]
         [HttpPut("{id:Guid}")]
-        public ActionResult Put([FromRoute] Guid id, [FromBody] CreatePessoa update)
+        public ActionResult Put([FromRoute] Guid id, [FromBody] Pessoa update)
         {
-
-            var updatePessoa = _Service.UpdatePessoa(id, update.Nome, update.Sobrenome, update.DataNascimento, update.Email, update.Senha, update.UrlImagem);
+            Pessoa pessoaUpdate = update;
+            pessoaUpdate.Id = id;
+            var updatePessoa = _Service.UpdatePessoa(pessoaUpdate);
 
             return Ok(updatePessoa);
 
@@ -92,6 +93,33 @@ namespace RedeSocialAPI.Controllers
         public ActionResult CadastraAmigo([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
         {
             var pessoa = _Service.CadastraAmigo(idPessoa, idAmigo);
+            return Ok(pessoa);
+        }
+
+        //[Authorize]
+        //[HttpGet("{idPessoa:Guid}/{idAmigo:Guid}")]
+        //public ActionResult todoAmigos([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
+        //{
+        //    var pessoa = _Service.CadastraAmigo(idPessoa, idAmigo);
+        //    return Ok(pessoa);
+        //}
+
+        [Authorize]
+        [HttpDelete("/removerAmigo/{idPessoa:Guid}/{idAmigo:Guid}")]
+        public ActionResult removerAmigosById([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
+        {
+            var pessoa = _Service.GetPessoa(idPessoa);
+
+            foreach(var item in pessoa.Amigos)
+            {
+                if (item.AmigoId == idAmigo)
+                {
+                    pessoa.Amigos.Remove(item);
+                }
+            }
+
+            _Service.UpdatePessoa(pessoa);
+
             return Ok(pessoa);
         }
     }

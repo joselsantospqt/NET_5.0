@@ -40,16 +40,16 @@ namespace RedeSocialWeb.Controllers
 
         public async Task<List<TipoRetorno>> ApiFind<TipoRetorno>(string jwt, string path)
         {
-            var reponse = await _httpClient.GetAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}");
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
+            var reponse = await _httpClient.GetAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}");
             var conteudo = await reponse.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<TipoRetorno>>(conteudo);
         }
 
         public async Task<TipoRetorno> ApiFindById<TipoRetorno>(string jwt, Object id, string path)
         {
-            var reponse = await _httpClient.GetAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}/{id}");
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
+            var reponse = await _httpClient.GetAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}/{id}");
             var conteudo = await reponse.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TipoRetorno>(conteudo);
         }

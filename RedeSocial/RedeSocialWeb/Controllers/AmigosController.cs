@@ -22,9 +22,15 @@ namespace RedeSocialWeb.Controllers
             _logger = logger;
         }
 
+        //public IActionResult List(List<Pessoa> retorno)
+        //{
+
+        //    return View(retorno);
+        //}
+
         public async Task<IActionResult> List()
         {
-            var retorno = await ApiFind<Pessoa>(this.HttpContext.Session.GetString("Token"), "Pessoas");
+            var retorno = await ApiFind<Pessoa>(this.HttpContext.Session.GetString("token"), "Pessoas/getAll");
 
             return View(retorno);
         }
@@ -33,14 +39,14 @@ namespace RedeSocialWeb.Controllers
         //buscar a pessoa por id
         public async Task<IActionResult> Details(Guid id)
         {
-            var pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("Token"), id ,"Pessoas");
+            var pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), id ,"Pessoas");
 
             return View(pessoa);
         }
 
         public async Task<IActionResult> Adicionar(Guid id)
         {
-            await ApiSaveAutorize(this.HttpContext.Session.GetString("Token"), 
+            await ApiSaveAutorize(this.HttpContext.Session.GetString("token"), 
                 new { idPessoa = this.HttpContext.Session.GetString("UserId"), idAmigo = id }, "Pessoas");
 
             return RedirectToAction("List");
@@ -48,7 +54,7 @@ namespace RedeSocialWeb.Controllers
 
         public async Task<IActionResult> View()
         {
-            var retorno = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("Token"), this.HttpContext.Session.GetString("UserId"), "Pessoas");
+            var retorno = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), this.HttpContext.Session.GetString("UserId"), "Pessoas");
 
             //var listId = 
 
