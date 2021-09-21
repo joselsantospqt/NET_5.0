@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Domain.Entidade;
 using Microsoft.AspNetCore.Http;
-using Infrastructure.BlobStorage;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
@@ -15,84 +14,101 @@ using Microsoft.AspNetCore.Authorization;
 namespace RedeSocialWeb.Controllers
 {
     [Authorize]
-    public class PerfilController : Controller
+    public class PerfilController : BaseController
     {
-        public PerfilController(IConfiguration configuration)
+        public PerfilController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : base(httpClientFactory, configuration)
         {
-            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
-        public IActionResult Editar()
+        public async Task<IActionResult> Editar(Pessoa pessoa)
         {
-            return View();
-        }
+            await CarregaDadosPessoa();
 
+            return View(pessoa);
+        }
+        private async Task CarregaDadosPessoa()
+        {
+            var CargaPessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), this.HttpContext.Session.GetString("UserId"), "Pessoas");
+            ViewData["ID"] = CargaPessoa.Id;
+            ViewData["Email"] = CargaPessoa.Email;
+            ViewData["url"] = CargaPessoa.ImagemUrlPessoa;
+        }
 
 
         [HttpGet]
         [Route("Perfil/Editar/{Id:guid}")]
         public async Task<IActionResult> Editar(Guid id)
         {
-            HttpClient httpClient = new HttpClient();
-            var resultado = await httpClient.GetAsync($"https://localhost:44383/api/Pessoas/{id}");
-            var conteudo = await resultado.Content.ReadAsStringAsync();
-            Pessoa Pessoa = JsonConvert.DeserializeObject<Pessoa>(conteudo);
+            var pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), id, "Pessoas");
+            await CarregaDadosPessoa();
 
-            return View(Pessoa);
+            return View(pessoa);
         }
 
         [HttpPost]
         [Route("Perfil/Editar/{Id:guid}")]
         public async Task<IActionResult> Editar(Guid id, IFormCollection collection)
         {
-            var a = Configuration.GetConnectionString("KeyBlobStorage");
-            var b = Configuration.GetConnectionString("UrlBlobStorageImagem");
-            //CHAMAR AQUI O REPOSITORIO DE BLOBSTORAGE
-            var blobstorage = new ImagemRepositorio(Configuration.GetSection("Logging").GetSection("ConnectionStrings")["KeyBlobStorage"], Configuration.GetSection("Logging").GetSection("ConnectionStrings")["UrlBlobStorageImagem"]);
+            var existeImagem = false;
 
             foreach (var item in this.Request.Form.Files)
             {
-
+                existeImagem = true;
                 MemoryStream ms = new MemoryStream();
 
                 item.CopyTo(ms);
 
                 ms.Position = 0;
 
-                var fileName = "Imagem_Perfil" + id + ".png";
+                var fileName = $"Perfil_{id}_.png";
 
-                 blobstorage.SaveUpdate(fileName, ms);
-
+                //blobstorage.SaveUpdate(fileName, ms);
             }
 
+            Pessoa pessoa = new();
+
+            if (existeImagem)
+            {
+                pessoa = new() { Nome = collection["Nome"], Sobrenome = collection["Sobrenome"], ImagemUrlPessoa = $"Perfil_{id}_.png" };
+            }
+            else
+                pessoa = new() { Nome = collection["Nome"], Sobrenome = collection["Sobrenome"], ImagemUrlPessoa = "Perfil_default.png" };
 
 
-            //string urlApi = $"http://localhost:7071/api/Post";
-            //var putAsJson = JsonConvert.SerializeObject(Pessoa);
-            //conteudo = new StringContent(putAsJson, System.Text.Encoding.UTF8, "application/json");
-            //resultado = await httpClient.PutAsync(urlApi, conteudo);
-            //var Json = await resultado.Content.ReadAsStringAsync();
-            //Pessoa reponseJson = JsonConvert.DeserializeObject<Pessoa>(Json);
+            var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"), id, pessoa, "Pessoas");
 
-            return View();
+            if (retorno == null)
+            {
+                ViewData["MensagemRetorno"] = "Houve Um erro durante o post !";
+            }
+
+            return View(retorno);
         }
 
-        public IActionResult Excluir()
+        [HttpPost]
+        [Route("Perfil/Excluir/{Id:guid}")]
+        public async Task<IActionResult> Excluir(Guid id)
         {
+            var retorno = await ApiRemove(this.HttpContext.Session.GetString("token"), id, "Pessoas");
+            if (retorno.IsSuccessStatusCode)
+                Redirect("/Identity/Account/Login");
+
             return View();
         }
 
-        public IActionResult Perfil()
+        [HttpGet]
+        [Route("Perfil/Detalhes/{Id:guid}")]
+        public async Task<IActionResult> Detalhes(Guid id)
         {
-            return View();
+            var pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), id, "Pessoas");
+            await CarregaDadosPessoa();
+
+            return View(pessoa);
         }
 
-        public IActionResult PerfilUsuario()
-        {
-            return View();
-        }
+
 
 
     }

@@ -45,8 +45,8 @@ namespace RedeSocialWeb.Controllers
 
         public async Task<IActionResult> Adicionar(Guid id)
         {
-            await ApiSaveAutorize(this.HttpContext.Session.GetString("token"), 
-                new { idPessoa = this.HttpContext.Session.GetString("UserId"), idAmigo = id }, "Pessoas/cadastrarAmigo/");
+            //await ApiSaveAutorize(this.HttpContext.Session.GetString("token"), 
+            //    new { idPessoa = this.HttpContext.Session.GetString("UserId"), idAmigo = id }, "Pessoas/cadastrarAmigo/");
 
             return RedirectToAction("List");
         }

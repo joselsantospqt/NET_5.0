@@ -15,7 +15,6 @@ namespace Domain
             services.AddScoped<PostService>();
             services.AddScoped<PessoaService>();
             services.AddScoped<CommentService>();
-            services.AddScoped<ImagemService>();
 
         }
     }

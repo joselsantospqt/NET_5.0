@@ -54,13 +54,14 @@ namespace RedeSocialWeb.Controllers
             return JsonConvert.DeserializeObject<TipoRetorno>(conteudo);
         }
 
-        public async Task<HttpResponseMessage> ApiSaveAutorize(string jwt, Object objeto, string path)
+        public async Task<TipoRetorno> ApiSaveAutorize<TipoRetorno>(string jwt, Object objeto, string path)
         {
             var json = JsonConvert.SerializeObject(objeto);
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var resultado = await _httpClient.PostAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}", content);
-            return resultado;
+            var conteudo = await resultado.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TipoRetorno>(conteudo);
         }
         public async Task<HttpResponseMessage> ApiSave(Object objeto, string path)
         {
@@ -70,21 +71,23 @@ namespace RedeSocialWeb.Controllers
             return resultado;
         }
 
-        public async Task ApiRemove(string jwt, Object id, string path)
+        public async Task<HttpResponseMessage> ApiRemove(string jwt, Object id, string path)
         {
             var json = JsonConvert.SerializeObject(id);
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var resultado = await _httpClient.DeleteAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}/{id}");
+            return resultado;
         }
 
-        public async Task ApiUpdate(string jwt, Object id, Object objeto, string path)
+        public async Task<TipoRetorno> ApiUpdate<TipoRetorno>(string jwt, Object id, Object objeto, string path)
         {
             var json = JsonConvert.SerializeObject(objeto);
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", jwt);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var resultado = await _httpClient.PutAsync($"{_configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/{path}/{id}", content);
-
+            var conteudo = await resultado.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TipoRetorno>(conteudo);
         }
 
     }

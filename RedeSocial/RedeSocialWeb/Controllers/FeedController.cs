@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Domain.Entidade.View;
 using Microsoft.Extensions.Configuration;
-using Infrastructure.BlobStorage;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace RedeSocialWeb.Controllers
 {
@@ -20,96 +20,86 @@ namespace RedeSocialWeb.Controllers
     {
         public FeedController(IHttpClientFactory httpClientFactory, IConfiguration configuration) : base(httpClientFactory, configuration)
         {
+
         }
 
-        public async Task<IActionResult> Index(Pessoa pessoa)
+        public async Task<IActionResult> Index()
         {
-            //COMANDO PARA SALVAR NA SESSION
-            //List<PessoaFeed> obj = new();
+            var ListaDePost = await ApiFind<ItemPost>(this.HttpContext.Session.GetString("token"), "Posts/getAllFeed");
 
-            //HttpClient httpClient = new HttpClient();
-            //var resultado = await httpClient.GetAsync($"{Configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Posts/getAll");
-            //var conteudo = await resultado.Content.ReadAsStringAsync();
-            //var posts = JsonConvert.DeserializeObject<List<Post>>(conteudo);
+            await CarregaDadosPessoa();
 
-            //resultado = await httpClient.GetAsync($"{Configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Comments/getAll");
-            //conteudo = await resultado.Content.ReadAsStringAsync();
-            //var comments = JsonConvert.DeserializeObject<List<Comment>>(conteudo);
-
-            //foreach (var item in posts) {
-
-            //    string urlApi = $"{Configuration.GetSection("Logging").GetSection("ConnectionStrings")["ConnectionStringsApi"]}/api/Pessoas/{item.Id}";
-            //    resultado = await httpClient.GetAsync(urlApi);
-            //    conteudo = await resultado.Content.ReadAsStringAsync();
-
-            //    PessoaFeed newObj = new();
-            //    newObj.Posts = item;
-            //    newObj.AutorPost = JsonConvert.DeserializeObject<Pessoa>(conteudo);
-            //    newObj.Comments = new List<Comment>();
-            //    newObj.Comments.AddRange(comments.FindAll(x => x.Post.PostId.Equals(item.Id)));
-            //    obj.Add(newObj);
-            //}
-
-            //var ListaPost = await ApiFind<Post>(this.HttpContext.Session.GetString("token"), "Posts/getAll");
-            //var ListaComments = await ApiFind<Comment>(this.HttpContext.Session.GetString("token"), "Comments/getAll");
-
-
-            //var query = from posts in ListaPost
-            //            join comments in ListaComments on posts.Id equals comments.Post.PostId
-            //            select new {idPessoaPost = posts.Autor.PessoaId, idPost = posts.Id, postMensagem = posts.Message, IdComment = comments.Id, commentsMessage = comments.Text , IdPessoaComment = comments.Pessoa.Id};
-
-            //foreach (var item in query) {
-            
-            
-            
-            //}
-
-
-            //foreach (var item in query)
-            //{
-            //    Console.WriteLine($"\"{item.idPost}\" is owned by {item.IdComment}");
-            //}
-
-
-            //ViewData["ID"] = pessoa.Id;
-            //ViewData["Email"] = pessoa.Email;
             ////var blobstorage = new ImagemRepositorio(Configuration.GetConnectionString("KeyBlobStorage"), Configuration.GetConnectionString("UrlBlobStorageImagem"));
-            //ViewData["url"] = "https://img.ibxk.com.br/2017/06/22/22100428046161.jpg?w=1120&h=420&mode=crop&scale=both";
 
-            return View();
+            return View(ListaDePost);
         }
 
-        public async Task<IActionResult> trazerDadosComent(String urlApi)
+        private async Task CarregaDadosPessoa()
         {
-            HttpClient httpClient = new HttpClient();
-
-            var resultado = await httpClient.GetAsync($"https://localhost:44383/api/{urlApi}");
-            var conteudo = await resultado.Content.ReadAsStringAsync();
-
-            List<Post> listaPosts = JsonConvert.DeserializeObject<List<Post>>(conteudo);
-            return View();
+            var CargaPessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), this.HttpContext.Session.GetString("UserId"), "Pessoas");
+            ViewData["ID"] = CargaPessoa.Id;
+            ViewData["Email"] = CargaPessoa.Email;
+            ViewData["url"] = CargaPessoa.ImagemUrlPessoa;
         }
 
-
-        public async Task<ActionResult> EnviaDadosPost(string textoPost, string filePost)
+        [HttpPost]
+        [Route("Feed/Comentar/{Id:guid}")]
+        public async Task<IActionResult> Comentar(Guid id, IFormCollection collection)
         {
-            var createPost = new CreatePost();
-            createPost.Message = textoPost;
-            createPost.ImagemUrl = filePost;
-            //pegar o id do usuario para passar na url
-            int id = 1; // por ser GUID assim da ruim, não sei como simular
+            CreateComment comentario = new() { Text = collection["comentario"] };
+            var retorno = await ApiSaveAutorize<Comment>(this.HttpContext.Session.GetString("token"), comentario, $"Comments/{id}/{collection["idPessoa"]}");
+            if (retorno != null)
+                ViewData["MensagemRetorno"] = "Comentado com Sucesso !";
+            else
+                ViewData["MensagemRetorno"] = "Houve Um erro durante o comentário !";
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        [Route("Feed/Postar/{Id:guid}")]
+        public async Task<IActionResult> Postar(Guid id, IFormCollection collection)
+        {
+
+            var existeImagem = false;
+
+            foreach (var item in this.Request.Form.Files)
+            {
+                existeImagem = true;
+                MemoryStream ms = new MemoryStream();
+
+                item.CopyTo(ms);
+
+                ms.Position = 0;
+
+                var fileName = $"Imagem_Post_{id}_.png";
+
+                //blobstorage.SaveUpdate(fileName, ms);
+            }
+
+            CreatePost post = new();
+
+            if (existeImagem)
+            {
+                post = new() { Message = collection["message"], ImagemUrl = $"Imagem_Post_{id}_.png" };
+            }
+            else
+                post = new() { Message = collection["message"], ImagemUrl = "" };
+
+            if (post.Message != null)
+            {
+                var retorno = await ApiSaveAutorize<Post>(this.HttpContext.Session.GetString("token"), post, $"Posts/{id}");
+
+                if (retorno == null)
+                {
+                    ViewData["MensagemRetorno"] = "Houve Um erro durante o post !";
+                }
+            }
 
 
-            HttpClient httpClient = new HttpClient();
-
-            var jsonTodo = JsonConvert.SerializeObject(createPost);
-            var conteudo = new StringContent(jsonTodo, System.Text.Encoding.UTF8, "application/json");
-            var urlApi = $"https://localhost:44383/api/post/{id}";
-            await httpClient.PostAsync(urlApi, conteudo);
 
             return RedirectToAction("Index");
         }
-
 
     }
 }

@@ -47,7 +47,7 @@ namespace RedeSocialWeb.Controllers
                 if (value.Token != null)
                 {
                     this.HttpContext.Session.SetString("token", value.Token.ToString());
-                    return RedirectToAction("Index", "Feed", createPessoa);
+                    return RedirectToAction("Index", "Feed");
                 }
 
                 return RedirectToAction("Autenticacao", "Login");

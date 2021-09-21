@@ -21,8 +21,6 @@ namespace Infrastructure
             services.AddScoped<IPostRepositorio, PostRepositorio>();
             services.AddScoped<IPessoaRepositorio, PessoaRepositorio>();
             services.AddScoped<ICommentRepositorio, CommentRepositorio>();
-            services.AddScoped<IImagemRepositorio, ImagemRepositorio>();
-
         }
     }
 }

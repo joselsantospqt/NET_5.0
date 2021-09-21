@@ -25,11 +25,6 @@ namespace Domain.Service
             return RepositorioPessoa.GetById(id);
         }
 
-        //public Pessoa GetPesoaEmail(string email)
-        //{
-        //    return RepositorioPessoa.GetByEmail(email);
-        //}
-
         public IEnumerable<Pessoa> GetAll()
         {
             return RepositorioPessoa.GetAll();
@@ -54,19 +49,20 @@ namespace Domain.Service
            )
         {
 
-            var Pessoa = new Pessoa();
-            Pessoa.Id = id;
-            Pessoa.Nome = nome;
-            Pessoa.Sobrenome = sobrenome;
-            Pessoa.DataNascimento = dataDeNascimento;
-            Pessoa.Email = email;
-            Pessoa.Senha = senha;
-            Pessoa.CreatedAt = DateTime.UtcNow;
-            Pessoa.UpdatedAt = new DateTime();
+            var pessoa = new Pessoa();
+            pessoa.Id = id;
+            pessoa.Nome = nome;
+            pessoa.Sobrenome = sobrenome;
+            pessoa.DataNascimento = dataDeNascimento;
+            pessoa.Email = email;
+            pessoa.Senha = senha;
+            pessoa.ImagemUrlPessoa = "Perfil_default.png";
+            pessoa.CreatedAt = DateTime.UtcNow;
+            pessoa.UpdatedAt = new DateTime();
 
-            RepositorioPessoa.SaveUpdate(Pessoa);
+            RepositorioPessoa.SaveUpdate(pessoa);
 
-            return Pessoa;
+            return pessoa;
         }
 
         public Pessoa UpdatePessoa(Pessoa pessoaUpdate)
@@ -77,17 +73,11 @@ namespace Domain.Service
                 pessoa.Nome = pessoaUpdate.Nome;
             if (pessoaUpdate.Sobrenome != null)
                 pessoa.Sobrenome = pessoaUpdate.Sobrenome;
-            if (pessoaUpdate.DataNascimento != new DateTime())
-                pessoa.DataNascimento = pessoaUpdate.DataNascimento;
-            if (pessoaUpdate.Email != null)
-                pessoa.Email = pessoaUpdate.Email;
-            if (pessoaUpdate.Senha != null)
-                pessoa.Senha = pessoaUpdate.Senha;
-            if (pessoaUpdate.ImagemUrlPessoa != null)
+            if (pessoaUpdate.ImagemUrlPessoa != null && pessoaUpdate.ImagemUrlPessoa != "string")
                 pessoa.ImagemUrlPessoa = pessoaUpdate.ImagemUrlPessoa;
-            if (pessoaUpdate.Amigos != null)
+            if (pessoaUpdate.Amigos.Count() > 0)
                 pessoa.Amigos = pessoaUpdate.Amigos;
-            if (pessoaUpdate.Posts != null)
+            if (pessoaUpdate.Posts.Count() > 0)
                 pessoa.Posts = pessoaUpdate.Posts;
             pessoa.UpdatedAt = DateTime.UtcNow;
 

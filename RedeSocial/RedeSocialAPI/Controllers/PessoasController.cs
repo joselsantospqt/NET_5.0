@@ -19,7 +19,7 @@ namespace RedeSocialAPI.Controllers
             _Service = service;
         }
 
-        [Authorize]
+    
         [HttpGet("getAll")]
         [Authorize]
         public ActionResult GetAll()
@@ -30,8 +30,9 @@ namespace RedeSocialAPI.Controllers
         }
 
 
-        [Authorize]
+    
         [HttpGet("{id:Guid}")]
+        [Authorize]
         public ActionResult GetById([FromRoute] Guid id)
         {
 
@@ -67,8 +68,9 @@ namespace RedeSocialAPI.Controllers
             return Created("api/[controller]", pessoa);
         }
 
-        [Authorize]
+    
         [HttpDelete("{id:Guid}")]
+        [Authorize]
         public ActionResult Delete(Guid id)
         {
 
@@ -77,8 +79,9 @@ namespace RedeSocialAPI.Controllers
             return NoContent();
         }
 
-        [Authorize]
+    
         [HttpPut("{id:Guid}")]
+        [Authorize]
         public ActionResult Put([FromRoute] Guid id, [FromBody] Pessoa update)
         {
             Pessoa pessoaUpdate = update;
@@ -89,16 +92,18 @@ namespace RedeSocialAPI.Controllers
 
         }
 
-        [Authorize]
+    
         [HttpPost("/cadastrarAmigo/{idPessoa:Guid}/{idAmigo:Guid}")]
+        [Authorize]
         public ActionResult CadastraAmigo([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
         {
             var pessoa = _Service.CadastraAmigo(idPessoa, idAmigo);
             return Ok(pessoa);
         }
 
+    
+        [HttpGet("/getTodosAmigos/{id:Guid}")]
         [Authorize]
-        [HttpGet("/getTodosAmigos/{idPessoa:Guid}")]
         public ActionResult todosAmigos([FromRoute] Guid id)
         {
             var pessoa = _Service.GetPessoa(id);
@@ -112,8 +117,9 @@ namespace RedeSocialAPI.Controllers
             return Ok(listaAmigos);
         }
 
-        [Authorize]
+    
         [HttpDelete("/removerAmigo/{idPessoa:Guid}/{idAmigo:Guid}")]
+        [Authorize]
         public ActionResult removerAmigosById([FromRoute] Guid idPessoa, [FromRoute] Guid idAmigo)
         {
             var pessoa = _Service.GetPessoa(idPessoa);

@@ -1,4 +1,10 @@
-﻿@model List<Domain.Entidade.View.PessoaFeed>;
+﻿@model List<Domain.Entidade.View.ItemPost>;
+@{
+    var idPessoa = ViewBag.ID;
+    var mensagem = ViewBag.MensagemRetorno;
+    var fotoPessoa = ViewBag.url;
+
+}
 <!--inicio content-->
 <main class="page-content">
 
@@ -23,34 +29,31 @@
         </div>
     </div>
     <!--fim row-->
-    <!-- Fazer publicação-->
     <div class="row">
         <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex mx-auto">
             <div class="card radius-10 w-100 overflow-hidden">
                 <div class="card-body">
 
                     <div class="commentFull d-flex justify-content-between py-4">
-                        <!-- Comentario Imagem -->
                         <a href="#">
                             <div class="commentImage d-flex align-items-center mt-3" style="margin-right: 10px;">
-                                <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="54" height="54">
+                                <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@fotoPessoa" alt="" class="rounded-circle" width="54" height="54">
                             </div>
                         </a>
-                        <!-- Comentario Texto-->
                         <div class="w-100">
-                            <form method="Post" action="/Feed/EnviaDadosPost/" enctype="multipart/form-data">
+                            <form action="/Feed/Postar/@idPessoa" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="" class="form-label"></label>
-                                    <textarea name="textoPost" form-control radius-10 placeholder="O que você está pensando..."></textarea>
+                                    <label for="message" class="form-label"></label>
+                                    <textarea type="text" for="message" name="message" class="form-control radius-10" placeholder="O que você está pensando..."></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="postFoto" class="col-sm-12 col-form-label">Imagem do post:</label>
+                                    <label for="filePost" class="col-sm-12 col-form-label">Imagem do post:</label>
                                     <div class="col-sm-12">
-                                        <input name="filePost" type="file" class="form-control" id="postFoto">
+                                        <input name="filePost" for="filePost" type="file" class="form-control">
                                     </div>
                                 </div>
                                 <div class="buttomComment d-flex justify-content-end ">
-                                    <button class="btn btn-primary" type="submit" value="Postar">Publicar post</button>
+                                    <input class="btn btn-primary" type="submit" value="Postar"/>
                                 </div>
                             </form>
                         </div>
@@ -59,8 +62,7 @@
             </div>
         </div>
     </div>
-    <!--fim row-->
-    <!-- Post -->
+
 
     @if (Model != null)
     {
@@ -68,26 +70,26 @@
         {
             <div class="row">
                 <div class="col-10 col-lg-9 col-xl-9 col-xxl-9 d-flex mx-auto">
-                    <div class="card radius-10 w-100 overflow-hidden">
+                    <div class="card radius-10 w-100 overflow-hidden" style="background-color: #d9d4d4 !important;">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="54" height="54">
+                                    <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@post.UrlImagemPerfilPessaPost" alt="" class="rounded-circle" width="54" height="54">
                                     <div class="ms-3">
-                                        @*<h6 class="mb-0 dropdown-user-name">@post.Posts.Autor.</h6>
-                                        <p>@post.CreatedAt</p>*@
+                                        <h6 class="mb-0 dropdown-user-name">@post.NomePessoaPost</h6>
+                                        <p>@post.CreatedAt</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 pt-4">
                                 <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        @*<img src="@post.ImagemUrlPost" class="card-img" alt="...">*@
+                                    <div class="col-md-12">
+                                        <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@post.ImagemUrlPost" class="card-img" alt="...">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <div class="card-body">
                                             <p class="card-text">
-                                                @*@post.Message*@
+                                                @post.Message
                                             </p>
                                         </div>
                                     </div>
@@ -95,11 +97,11 @@
                             </div>
                             <div class="mt-4 p-3 bg-light radius-10 border">
                                 <!-- Topo comentario -->
-                                @*@foreach (var comentario in post.ListPostComments)
-                                {*@
+                                @foreach (var comentario in post.comments)
+                                {
                                     //Sem dados do comentário para a pessoa ou terei que buscar pelo id do comentario
                                     <div class="d-flex justify-content-between">
-                                        <div class="likes">1 curtida | 1 Comentário</div>
+                                        <div class="likes">0 curtida</div>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-heart"></i> Curtir</button>
                                         </div>
@@ -107,34 +109,39 @@
                                     <!-- Fim comentario -->
                                     <!-- Comentario Full -->
                                     <div class="commentFull d-flex justify-content-between py-4">
-
-                                        <!-- Comentario Imagem -->
-                                        <a href="#">
-                                            <div class="commentImage d-flex align-items-center " style="margin-right: 10px;">
-                                                <img src="https://via.placeholder.com/110X110" alt="" class="rounded-circle" width="34" height="34">
-                                            </div>
-                                        </a>
                                         <!-- Fim Comentario Imagem -->
                                         <!-- Comentario Texto-->
                                         <div class=" bg-white radius-10 p-2">
-                                            <p class="commentName px-3 mb-0"><strong>Nome da pessoa</strong></p>
-                                            <p class="commentText px-3 pt-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris </p>
+                                            <p class="commentName px-3 mb-0"><strong>@comentario.NomePessoaComment</strong></p>
+                                            <p class="commentText px-3 pt-1">@comentario.Text</p>
                                         </div>
                                         <!-- Fim Comentario Texto-->
 
                                     </div>
-                                @*}*@
+                                }
                                 <!-- Fim comentario -->
                                 <!-- Comentario textarea-->
                                 <div>
-                                    <div class="mb-3">
-                                        <label for="" class="form-label"></label>
-                                        <textarea class="form-control radius-10" placeholder="Escreva o seu comentário..."></textarea>
-                                    </div>
-                                    <div class="buttomComment d-flex justify-content-end ">
-                                        <button class="btn btn-primary btn-sm" type="submit">Enviar Comentário.</button>
-                                    </div>
+                                    <form action="/Feed/Comentar/@post.IdPost" method="post" class="row g-3">
+                                        <div class="col-2 d-none">
+                                            <label for="idPessoa" class="form-label">Dono Do Comentário</label>
+                                            <input type="text" for="idPessoa" name="idPessoa" class="form-control" value="@idPessoa">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="comentario" class="form-label"></label>
+                                            <textarea type="text" for="comentario" name="comentario" class="form-control radius-10" placeholder="Escreva o seu comentário..."></textarea>
+                                        </div>
+                                        <div class="buttomComment d-flex justify-content-end ">
+                                            <input class="btn btn-primary btn-sm" type="submit" value="Enviar Comentário" />
+                                        </div>
+                                    </form>
                                 </div>
+                                @{if (mensagem != null)
+                                    {
+                                        <h4 class="text-success">Comentado com Sucesso.</h4>
+                                    }
+
+                                }
                                 <!-- fim comentario textarea-->
                             </div>
                         </div>
