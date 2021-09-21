@@ -1,4 +1,5 @@
 ﻿using Domain.Entidade;
+using Domain.Entidade.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,7 @@ namespace RedeSocialWeb.Controllers
     public class AmigosController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-        public AmigosController(IHttpClientFactory httpClientFactory, 
+        public AmigosController(IHttpClientFactory httpClientFactory,
             IConfiguration configuration, ILogger<HomeController> logger) : base(httpClientFactory, configuration)
         {
             _logger = logger;
@@ -26,39 +27,53 @@ namespace RedeSocialWeb.Controllers
         public async Task<IActionResult> View()
         {
             var retorno = await ApiFind<Pessoa>(this.HttpContext.Session.GetString("token"), "Pessoas/getAll");
-
+            await CarregaDadosPessoa();
             return View(retorno);
         }
         public async Task<IActionResult> List()
         {
-            var retorno = await ApiFindAllById<Pessoa>(this.HttpContext.Session.GetString("token"), 
+            var retorno = await ApiFindAllById<Pessoa>(this.HttpContext.Session.GetString("token"),
                 this.HttpContext.Session.GetString("UserId"), "Pessoas/getTodosAmigos");
-
+            await CarregaDadosPessoa();
             return View(retorno);
         }
 
         //buscar a pessoa por id
+        [HttpGet]
+        [Route("Amigos/Details/{Id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), id ,"Pessoas");
+            var pessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), id, "Pessoas");
+            await CarregaDadosPessoa();
             return View(pessoa);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Adicionar(Guid id)
         {
-            await ApiSaveAutorize<Pessoa>(this.HttpContext.Session.GetString("token"), 
-                new { idPessoa = this.HttpContext.Session.GetString("UserId"), idAmigo = id }, "Pessoas/cadastrarAmigo");
+            CreateAmigo novoAmigo = new() {Id = id };
+            var retorno = await ApiSaveAutorize<Pessoa>(this.HttpContext.Session.GetString("token"), novoAmigo, $"Pessoas/cadastrarAmigo/{this.HttpContext.Session.GetString("UserId")}");
 
             return RedirectToAction("List");
         }
 
-
-        public async Task<IActionResult> RemoveAmigoById(Guid id)
+        [HttpGet]
+        [Route("Amigos/Deletar/{Id:guid}")]
+        public async Task<IActionResult> Deletar(Guid id)
         {
-            var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"), 
-                this.HttpContext.Session.GetString("UserId"), new { idAmigo = id }, "Pessoas/removerAmigo");
+            CreateAmigo novoAmigo = new() { Id = id };
+            var retorno = await ApiUpdate<Pessoa>(this.HttpContext.Session.GetString("token"),
+                this.HttpContext.Session.GetString("UserId"), novoAmigo, "Pessoas/removerAmigo");
 
             return RedirectToAction("List");
+        }
+
+        private async Task CarregaDadosPessoa()
+        {
+            var CargaPessoa = await ApiFindById<Pessoa>(this.HttpContext.Session.GetString("token"), this.HttpContext.Session.GetString("UserId"), "Pessoas");
+            ViewData["ID"] = CargaPessoa.Id;
+            ViewData["Email"] = CargaPessoa.Email;
+            ViewData["url"] = CargaPessoa.ImagemUrlPessoa;
         }
 
     }

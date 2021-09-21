@@ -46,17 +46,17 @@
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.Email)
                             </dd>
-                            <dt class="col-sm-2">
+                            <dt class="col-sm-2 d-none">
                                 @Html.DisplayNameFor(model => model.Senha)
                             </dt>
-                            <dd class="col-sm-10">
+                            <dd class="col-sm-10 d-none">
                                 @Html.DisplayFor(model => model.Senha)
                             </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.ImagemUrlPessoa)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.ImagemUrlPessoa)
+                                <img src="https://paquetahomologstorage.blob.core.windows.net/imagens/@Model.ImagemUrlPessoa" width="320px" height="320px" />
                             </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.CreatedAt)
@@ -74,7 +74,7 @@
                     </div>
                     <div>
                         @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
-                        <a asp-action="Amigos">Voltar a lista</a>
+                        <a asp-action="View">Voltar a lista</a>
                     </div>
                 </div>
             </div>
