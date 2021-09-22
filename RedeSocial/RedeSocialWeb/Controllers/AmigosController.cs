@@ -27,6 +27,17 @@ namespace RedeSocialWeb.Controllers
         public async Task<IActionResult> View()
         {
             var retorno = await ApiFind<Pessoa>(this.HttpContext.Session.GetString("token"), "Pessoas/getAll");
+            Pessoa usuario = new();
+
+            foreach (var pessoa in retorno)
+            {
+                if (pessoa.Id.ToString() == this.HttpContext.Session.GetString("UserId"))
+                {
+                    usuario = pessoa;
+                }
+            }
+            retorno.Remove(usuario);
+
             await CarregaDadosPessoa();
             return View(retorno);
         }
