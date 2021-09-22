@@ -173,6 +173,16 @@ namespace RedeSocialWeb.Controllers
         }
 
         [HttpGet]
+        [Route("Feed/ExcluirComentario/{id:Guid}")]
+        public async Task<IActionResult> ExcluirComentario(Guid id)
+        {
+            Comment commentario = await ApiFindById<Comment>(this.HttpContext.Session.GetString("token"), id, "Comments");
+            var retorno = await ApiRemove(this.HttpContext.Session.GetString("token"), commentario.Id, "Comments");
+            return RedirectToAction("Index", "Feed");
+        }
+
+
+        [HttpGet]
         [Route("Feed/Detalhes/{Id:guid}")]
         public async Task<IActionResult> Detalhes(Guid id)
         {

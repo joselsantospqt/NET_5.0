@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="buttomComment d-flex justify-content-end ">
-                                    <input class="btn btn-primary" type="submit" value="Postar"/>
+                                    <input class="btn btn-primary" type="submit" value="Postar" />
                                 </div>
                             </form>
                         </div>
@@ -114,6 +114,13 @@
                                         <div class=" bg-white radius-10 p-2">
                                             <p class="commentName px-3 mb-0"><strong>@comentario.NomePessoaComment</strong></p>
                                             <p class="commentText px-3 pt-1">@comentario.Text</p>
+                                            @{if (comentario.IdPessoaComment == @idPessoa || post.IdPessoaPost == @idPessoa)
+                                                {
+                                                    <a asp-controller="Feed" asp-action="ExcluirComentario" asp-route-id="@comentario.IdComment">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"><i class="bi bi-trash-fill"></i> Excluir</button>
+                                                    </a>
+                                                }
+                                            }
                                         </div>
                                         <!-- Fim Comentario Texto-->
 
