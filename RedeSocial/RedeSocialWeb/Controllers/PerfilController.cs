@@ -58,7 +58,8 @@ namespace RedeSocialWeb.Controllers
             var existeImagem = false;
 
             MemoryStream ms = new MemoryStream();
-            var fileName = $"Perfil_{id}_.png";
+            var fileName = $"Perfil_{id}{RandomNumber()}_.png";
+
 
             foreach (var item in this.Request.Form.Files)
             {
@@ -90,6 +91,11 @@ namespace RedeSocialWeb.Controllers
 
             return Redirect(retorno.Id.ToString());
 
+        }
+        private string RandomNumber()
+        {
+            Random generator = new Random();
+            return generator.Next(0, 1000000).ToString("D6");
         }
 
         [HttpGet]

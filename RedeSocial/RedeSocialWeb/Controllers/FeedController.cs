@@ -65,7 +65,7 @@ namespace RedeSocialWeb.Controllers
 
             var existeImagem = false;
             MemoryStream ms = new MemoryStream();
-            var fileName = $"Post_{id}_.png";
+            var fileName = $"Post_{id}{RandomNumber()}_.png";
 
             foreach (var item in this.Request.Form.Files)
             {
@@ -99,7 +99,11 @@ namespace RedeSocialWeb.Controllers
             return RedirectToAction("Index");
         }
 
-
+        private string RandomNumber()
+        {
+            Random generator = new Random();
+            return generator.Next(0, 1000000).ToString("D6");
+        }
 
         [HttpGet]
         [Route("Feed/GetTodosPosts/{Id:guid}")]
@@ -126,7 +130,7 @@ namespace RedeSocialWeb.Controllers
         {
             var existeImagem = false;
             MemoryStream ms = new MemoryStream();
-            var fileName = $"Post_{id}_.png";
+            var fileName = $"Post_{id}{RandomNumber()}_.png";
             CreatePost UpdatePost = new();
             foreach (var item in this.Request.Form.Files)
             {
