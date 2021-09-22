@@ -4,7 +4,7 @@
     var pessoaEmail = ViewBag.Email;
     var pessoaImagem = ViewBag.url;
 
- }
+}
 <!doctype html>
 <html lang="pt-br" class="light-theme">
 
@@ -12,6 +12,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <environment include="Development">
+        <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
+
+
+        <!-- Bootstrap CSS -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+        <link href="~/assets/plugins/datetimepicker/css/classic.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
+        <link href="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css">
+    </environment>
+
+    <environment exclude="Development">
         <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
 
 
@@ -45,11 +63,11 @@
                 </div>
 
                 @*<form>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Pesquisar..." aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Pesquisar</button>
-                    </div>
-                </form>*@
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Pesquisar..." aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Pesquisar</button>
+                        </div>
+                    </form>*@
 
                 <div class="top-navbar-right ms-auto">
                     <ul class="navbar-nav align-items-center">
@@ -164,44 +182,44 @@
                 </li>
 
                 @*<li class="menu-label">Perfil</li>
-        <li>
+                    <li>
 
-                <div class="menu-title"> <i class="bi bi-person-lines-fill"></i> Opções de perfil</div>
+                            <div class="menu-title"> <i class="bi bi-person-lines-fill"></i> Opções de perfil</div>
 
-            <ul>
-                <li>
-                    <a href="/perfil/perfilusuario"><i class="bi bi-circle"></i>Ver perfil</a>
-                </li>
-                <li>
-                    <a href="/perfil/editarperfil"><i class="bi bi-circle"></i>Editar perfil</a>
-                </li>
-                <li>
-                    <a href="/perfil/excluirconta"><i class="bi bi-circle"></i>Excluir conta</a>
-                </li>
-            </ul>
-        </li>*@
+                        <ul>
+                            <li>
+                                <a href="/perfil/perfilusuario"><i class="bi bi-circle"></i>Ver perfil</a>
+                            </li>
+                            <li>
+                                <a href="/perfil/editarperfil"><i class="bi bi-circle"></i>Editar perfil</a>
+                            </li>
+                            <li>
+                                <a href="/perfil/excluirconta"><i class="bi bi-circle"></i>Excluir conta</a>
+                            </li>
+                        </ul>
+                    </li>*@
 
                 @*<li class="menu-label">Trilhas</li>
-        <li>
+                    <li>
 
 
-                <div class="menu-title"><i class="bi bi-compass"></i> Opções de Trilhas</div>
+                            <div class="menu-title"><i class="bi bi-compass"></i> Opções de Trilhas</div>
 
-            <ul>
-                <li>
-                    <a href="/trilhas/trilhasconfirmadas"><i class="bi bi-circle"></i>Trilhas confirmadas</a>
-                </li>
-                <li>
-                    <a href="/trilhas/criartrilha"><i class="bi bi-circle"></i>Criar trilha</a>
-                </li>
-                <li>
-                    <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Editar trilha</a>
-                </li>
-                <li>
-                    <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Excluir trilha</a>
-                </li>
-            </ul>
-        </li>*@
+                        <ul>
+                            <li>
+                                <a href="/trilhas/trilhasconfirmadas"><i class="bi bi-circle"></i>Trilhas confirmadas</a>
+                            </li>
+                            <li>
+                                <a href="/trilhas/criartrilha"><i class="bi bi-circle"></i>Criar trilha</a>
+                            </li>
+                            <li>
+                                <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Editar trilha</a>
+                            </li>
+                            <li>
+                                <a href="/trilhas/listartrilhas"><i class="bi bi-circle"></i>Excluir trilha</a>
+                            </li>
+                        </ul>
+                    </li>*@
             </ul>
             <!--fim navegação-->
         </aside>
@@ -211,7 +229,7 @@
         <div class="bg-surface">
             @RenderBody()
         </div>
-        
+
 
         <!--fim main-->
 
@@ -222,21 +240,39 @@
         <script src="~/assets/js/bootstrap.bundle.min.js"></script>
         <script src="~/assets/js/jquery.min.js"></script>
         <script src="~/assets/js/app.js"></script>
+        <!--datetimepicker e  file-uploader-->
+        <script src="~/assets/plugins/datetimepicker/js/picker.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.time.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.date.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js"></script>
+        <script src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
+        <script src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+        <script src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
+        <script src="~/assets/js/form-file-upload.js"></script>
+        <script src="~/assets/js/form-date-time-pickes.js"></script>
+
+    </environment>
+    <environment exclude="Development">
+        <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/js/jquery.min.js"></script>
+        <script src="~/assets/js/app.js"></script>
+        <!--datetimepicker e  file-uploader-->
+        <script src="~/assets/plugins/datetimepicker/js/picker.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.time.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.date.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js"></script>
+        <script src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
+        <script src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+        <script src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
+        <script src="~/assets/js/form-file-upload.js"></script>
+        <script src="~/assets/js/form-date-time-pickes.js"></script>
     </environment>
 
-    <!--datetimepicker e  file-uploader-->
-    <script src="~/assets/plugins/datetimepicker/js/picker.js"></script>
-    <script src="~/assets/plugins/datetimepicker/js/picker.time.js"></script>
-    <script src="~/assets/plugins/datetimepicker/js/picker.date.js"></script>
-    <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js"></script>
-    <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js"></script>
-    <script src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
-    <script src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
-    <script src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
-    <script src="~/assets/js/form-file-upload.js"></script>
-    <script src="~/assets/js/form-date-time-pickes.js"></script>
 
-    @RenderSection("scripts", required:false)
+
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

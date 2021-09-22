@@ -4,5 +4,6 @@
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <ShowAllFiles>false</ShowAllFiles>
+    <NameOfLastUsedPublishProfile>C:\Git\.NET-5-REST-API\RedeSocial\RedeSocialAPI\Properties\PublishProfiles\RedeSocialAPI - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

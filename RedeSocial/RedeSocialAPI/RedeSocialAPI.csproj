@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>a2f51da5-381f-472b-afc3-9f6990f3c6d7</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/2de59e46-8651-404b-acdd-32e91e100a15/resourcegroups/Paqueta-Homologacao/providers/Microsoft.Insights/components/RedeSocialAPIInsights</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.2.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />

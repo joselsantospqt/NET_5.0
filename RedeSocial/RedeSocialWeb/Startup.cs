@@ -10,6 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Azure;
+using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
+using Azure.Core.Extensions;
 
 namespace RedeSocialWeb
 {
@@ -28,6 +32,11 @@ namespace RedeSocialWeb
             services.AddControllersWithViews();
             services.AddHttpClient();
             services.AddSession();
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(Configuration["paquetahomologstorage:blob"], preferMsi: true);
+                builder.AddQueueServiceClient(Configuration["paquetahomologstorage:queue"], preferMsi: true);
+            });
 
         }
 
@@ -57,6 +66,31 @@ namespace RedeSocialWeb
                     pattern: "{controller=Autenticacao}/{action=Login}");
                 endpoints.MapRazorPages();
             });
+        }
+    }
+    internal static class StartupExtensions
+    {
+        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddBlobServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddBlobServiceClient(serviceUriOrConnectionString);
+            }
+        }
+        public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri serviceUri))
+            {
+                return builder.AddQueueServiceClient(serviceUri);
+            }
+            else
+            {
+                return builder.AddQueueServiceClient(serviceUriOrConnectionString);
+            }
         }
     }
 }

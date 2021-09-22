@@ -22,8 +22,31 @@
         <link href="~/assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
         <link href="~/assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
         <link href="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css">
+        <link rel="stylesheet" href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css"
+              asp-fallback-href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     </environment>
+
+    <environment exclude="Development">
+        <link rel="icon" href="~/assets/img/favicon-32x32.png" type="image/png" />
+
+
+        <!-- Bootstrap CSS -->
+        <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet" />
+        <link href="~/assets/css/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+        <link href="~/assets/plugins/datetimepicker/css/classic.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.time.css" rel="stylesheet" />
+        <link href="~/assets/plugins/datetimepicker/css/classic.date.css" rel="stylesheet" />
+        <link href="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css"
+              asp-fallback-href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    </environment>
+
     <title>Tracking Trip</title>
 </head>
 
@@ -59,11 +82,41 @@
 
     </div>
     <!--fim wrapper-->
-
     <environment include="Development">
         <script src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
         <script src="~/assets/js/jquery.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
         <script src="~/assets/js/app.js" asp-fallback-src="~/assets/js/app.js" asp-fallback-test="window.jQuery"></script>
+        <!--datetimepicker e  file-uploader-->
+        <script src="~/assets/plugins/datetimepicker/js/picker.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.time.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.date.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js" asp-fallback-src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js" asp-fallback-test="window.jQuery"></script>
+        @*<script src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
+        <script src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+        <script src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
+        <script src="~/assets/js/form-file-upload.js"></script>
+        <script src="~/assets/js/form-date-time-pickes.js"></script>*@
+
+    </environment>
+    <environment exclude="Development">
+        <script src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
+        <script src="~/assets/js/jquery.min.js" asp-fallback-src="~/assets/js/bootstrap.bundle.min.js" asp-fallback-test="window.jQuery"></script>
+        <script src="~/assets/js/app.js" asp-fallback-src="~/assets/js/app.js" asp-fallback-test="window.jQuery"></script>
+        <!--datetimepicker e  file-uploader-->
+        <script src="~/assets/plugins/datetimepicker/js/picker.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.time.js"></script>
+        <script src="~/assets/plugins/datetimepicker/js/picker.date.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/moment.min.js"></script>
+        <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js" asp-fallback-src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.min.js" asp-fallback-test="window.jQuery"></script>
+        @*<script src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js"
+                asp-fallback-src="~/assets/plugins/fancy-file-uploader/jquery.fileupload.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>*@
+        @*<script src="~/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+        <script src="~/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
+        <script src="~/assets/js/form-file-upload.js"></script>
+        <script src="~/assets/js/form-date-time-pickes.js"></script>*@
     </environment>
 
     @RenderSection("scripts", required: false)
