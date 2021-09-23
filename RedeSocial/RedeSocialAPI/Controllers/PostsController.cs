@@ -52,12 +52,12 @@ namespace RedeSocialAPI.Controllers
                 itemPost.Message = item.Message;
                 itemPost.CreatedAt = item.CreatedAt;
                 itemPost.comments = new List<ItemComment>();
-                foreach (var listComment in item.Comments)
+                foreach (var subItem in item.Comments)
                 {
                     ItemComment itemComment = new();
-                    Comment comment = _ServiceComment.GetComment(listComment.CommentId);
+                    Comment comment = _ServiceComment.GetComment(subItem.CommentId);
                     Pessoa objPessoaComment = _ServicePessoa.GetPessoa(comment.Pessoa.PessoaId);
-                    itemComment.IdComment = listComment.CommentId;
+                    itemComment.IdComment = comment.Id;
                     itemComment.IdPessoaComment = comment.Pessoa.PessoaId;
                     itemComment.NomePessoaComment = objPessoaComment.Nome;
                     itemComment.UrlImagemPessoaComment = objPessoaComment.ImagemUrlPessoa;
