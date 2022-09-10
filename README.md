@@ -13,7 +13,7 @@ Arquivo : appsettings.json / ConnectionStrings em ambos projetos
 00 - .\RedeSocialAPI
 00 - .\RedeSocialWeb
 
-Nesse Projeto utilizei o BlobStorage e o BlobStorageImagem para amazenar dados da rede social
+Nesse Projeto utilizei o Bancos de dados SQL Azure e o BlobStorage para amazenar dados da rede social
 para utilizar essa funcionalidade, será necessário criar um acesso na Azure e preenches as variáveis.
 Já o Insights você poderá ignora-lo se quiser.
 ```
